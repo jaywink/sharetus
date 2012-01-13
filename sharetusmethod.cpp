@@ -30,6 +30,7 @@
 #include "sharetusmethod.h"
 #include <QDebug>
 #include <QProcess>
+#include <QFile>
 #include <ShareUI/ItemContainer>
 #include <ShareUI/DataUriItem>
 #include <ShareUI/FileItem>
@@ -56,9 +57,48 @@ void SharetusMethod::selected (const ShareUI::ItemContainer * items) {
 
     Q_UNUSED (items);
 
-    Q_EMIT (done());
+    QString cmd = "echo 'hello world' > /dev/null";
+    QString text;
+    QString url;
+    QString excerpt;
 
-    return;
+    ShareUI::ItemIterator itemsIter = items->itemIterator();
+    while (itemsIter.hasNext()) {
+        // In reality we only should have one uri item atm
+
+        ShareUI::SharedItem item = itemsIter.next();
+        ShareUI::DataUriItem * uriItem = ShareUI::DataUriItem::toDataUriItem (item);
+
+        if (uriItem != 0) {
+            const MDataUri & dataUri = uriItem->dataUri();
+            url = dataUri.textData();
+            text = dataUri.attribute("title");
+            excerpt = "";
+        }
+    }
+
+    if (1) { // Debug
+        QFile file("/tmp/out.txt");
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        QTextStream out(&file);
+        out << "url: " << url << "\n";
+        out << "text: " << text << "\n";
+        out << "excerpt: " << excerpt << "\n";
+        file.close();
+    }
+
+    // Launch the command
+    QProcess process;
+    if (!QProcess::startDetached(cmd)) {
+        // Failed to launch the command
+        QString err = "Failed to launch: " + cmd;
+        qCritical(err.toLatin1());
+        emit(selectedFailed(err));
+    } else {
+        // Command successfully launched (still running)
+        emit(done());
+    }
+
 }
 
 void SharetusMethod::currentItems (const ShareUI::ItemContainer * items) {
@@ -68,7 +108,7 @@ void SharetusMethod::currentItems (const ShareUI::ItemContainer * items) {
 bool SharetusMethod::acceptContent (const ShareUI::ItemContainer * items)
 {
 
-  if (items == 0 || items->count() == 0) {
+  if (items == 0 || items->count() == 0 || items->count() >= 2) {
     return false;
   }
 
