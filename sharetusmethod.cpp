@@ -77,13 +77,15 @@ void SharetusMethod::selected (const ShareUI::ItemContainer * items) {
         }
     }
 
+    cmd += " '" + url + "' '" + text + "'";
+
     if (1) { // Debug
         QFile file("/tmp/out.txt");
         file.open(QIODevice::WriteOnly | QIODevice::Text);
         QTextStream out(&file);
         out << "url: " << url << "\n";
         out << "text: " << text << "\n";
-        out << "excerpt: " << excerpt << "\n";
+        out << "cmd: " << cmd << "\n";
         file.close();
     }
 

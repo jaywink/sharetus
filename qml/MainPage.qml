@@ -2,7 +2,10 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 
 Page {
-    id: socialshare
+    id: page
+
+    property variant share_url: sharer.share_url_str
+    property variant share_title: sharer.share_title_str
     
     Rectangle {
         id: canvas
@@ -37,27 +40,9 @@ Page {
                 width: parent.width
                 height: parent.height
                 
-                Button {
-                    id: paste_button
-                    text: "Paste"
-                    signal clicked()
-                    anchors.topMargin: 20
-                    width: 300
-                    height: 50
-                    anchors.horizontalCenter: main.horizontalCenter
-                    
-                    onClicked: { input_url.paste() }
-                    
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: paste_button.clicked()
-                    }
-                }
-                
                 Rectangle {
                     id: input_container
                     anchors.topMargin: 20
-                    anchors.top: paste_button.bottom
                     anchors.horizontalCenter: main.horizontalCenter
                     width: main.width*0.8
                     height: 50
@@ -66,37 +51,14 @@ Page {
                     TextInput {
                         id: input_url
                         readOnly: false
+                        text: page.share_url
                         anchors.leftMargin: 10
                         anchors.topMargin: 5
                         font.family: "Nokia Pure Text"
                         anchors.fill: parent
-                        focus: true
                         autoScroll: true
-                        selectByMouse: true
+                        selectByMouse: false
                         font.pixelSize: 24
-                        signal onAccepted()
-                    
-                        onAccepted: input_url.closeSoftwareInputPanel()
-                    }
-                    
-                    Text {
-                        id: clear_input
-                        text: "[x]"
-                        anchors.left: input_url.right
-                        anchors.leftMargin: 5
-                        color: "steelblue"
-                        font.family: "Nokia Pure Text"
-                        font.bold: true
-                        font.pixelSize: 32
-                        
-                        signal clicked()
-                        
-                        onClicked: { input_url.text = ""; }
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: clear_input.clicked()
-                        }
                     }
                 }
                 
