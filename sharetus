@@ -5,7 +5,6 @@ from BeautifulSoup import BeautifulSoup
 from PySide import QtCore
 from PySide import QtGui
 from PySide import QtDeclarative
-import urllib2
 import urllib
 import re
 import sys
@@ -40,11 +39,14 @@ class Sharer(QtCore.QObject):
         self.app.exec_()
                 
         
-    @QtCore.Slot(str,str)
-    def share(self, service, url):
-        page = urllib2.urlopen(url)
+    @QtCore.Slot(str)
+    def share(self, service):
+        print self.share_url
+        page = urllib.urlopen(self.share_url.replace(' ','+')).read()
+        print page
         soup = BeautifulSoup(page)
-        share_url = self.target_url[service].replace('{{url}}',urllib.quote(url)).replace('{{title}}',urllib.quote(soup.head.title.contents[0].strip('\r\n')))
+        print soup.head.title
+        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.share_url)).replace('{{title}}',urllib.quote(soup.head.title.contents[0].strip('\r\n')))
         QtGui.QDesktopServices.openUrl(share_url)
         
     def get_share_url(self):
@@ -61,8 +63,8 @@ class Sharer(QtCore.QObject):
 # INIT APP
 
 try:
-    share_url = sys.argv[1]
-    share_title = sys.argv[2]
+    share_url = sys.argv[1].replace("'","")
+    share_title = sys.argv[2].replace("'","")
 except:
     sys.exit("Please supply url and title as parameters")
 

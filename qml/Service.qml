@@ -2,7 +2,7 @@ import QtQuick 1.1
 
 Item {
     id: container
-    property alias icon: icon.source
+    property alias text: icon.text
     signal clicked()
 
     width: 60; height: 60
@@ -15,17 +15,11 @@ Item {
         radius: 10
         color: "darkgray"
         
-        Image {
+        Text {
             id: icon
             anchors.centerIn: parent
             
         }
-    }
-
-    Text {
-        id: service_name
-        anchors.horizontalCenter: container.horizontalCenter
-        anchors.verticalCenter: container.verticalCenter
     }
     
     MouseArea {
