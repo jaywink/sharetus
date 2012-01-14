@@ -46,7 +46,7 @@ QString SharetusMethod::title () {
 }
 
 QString SharetusMethod::icon () {
-    return QString();
+    return QString("sharetus");
 }
 
 QString SharetusMethod::id () {
@@ -57,7 +57,7 @@ void SharetusMethod::selected (const ShareUI::ItemContainer * items) {
 
     Q_UNUSED (items);
 
-    QString cmd = "echo 'hello world' > /dev/null";
+    QString cmd = "python /opt/sharetus/sharetus";
     QString text;
     QString url;
     QString excerpt;
@@ -88,7 +88,6 @@ void SharetusMethod::selected (const ShareUI::ItemContainer * items) {
     }
 
     // Launch the command
-    QProcess process;
     if (!QProcess::startDetached(cmd)) {
         // Failed to launch the command
         QString err = "Failed to launch: " + cmd;

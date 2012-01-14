@@ -41,7 +41,7 @@ context = view.rootContext()
 context.setContextProperty("sharer", sharer)
 
 # Create an URL to the QML file
-url = QtCore.QUrl('/usr/share/sharetus/qml/main.qml')
+url = QtCore.QUrl('/opt/sharetus/qml/main.qml')
 
 # Set the QML file and show
 view.setSource(url)
