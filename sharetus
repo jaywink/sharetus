@@ -1,0 +1,51 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+ 
+from BeautifulSoup import BeautifulSoup
+from PySide import QtCore
+from PySide import QtGui
+from PySide import QtDeclarative
+import urllib2
+import urllib
+import re
+import sys
+ 
+class Sharer(QtCore.QObject):
+    share_url = {   "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&v=1&noui=1&jump=doclose",
+                    "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
+                    "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}",
+                    "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
+                    "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes=",
+                    "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=",
+                    "gtranslate":"http://translate.google.com/translate?u={{url}}&sl=auto",
+                    "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
+                    "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
+                    "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}"
+                }
+        
+    @QtCore.Slot(str,str)
+    def share(self, service, url):
+        page = urllib2.urlopen(url)
+        soup = BeautifulSoup(page)
+        share_url = self.share_url[service].replace('{{url}}',urllib.quote(url)).replace('{{title}}',urllib.quote(soup.head.title.contents[0].strip('\r\n')))
+        QtGui.QDesktopServices.openUrl(share_url)
+
+sharer = Sharer()
+
+# Create Qt application and the QDeclarative view
+app = QtGui.QApplication(sys.argv)
+view = QtDeclarative.QDeclarativeView()
+
+# Link sharer
+context = view.rootContext()
+context.setContextProperty("sharer", sharer)
+
+# Create an URL to the QML file
+url = QtCore.QUrl('/usr/share/sharetus/qml/main.qml')
+
+# Set the QML file and show
+view.setSource(url)
+view.showFullScreen()
+
+# Enter Qt main loop
+sys.exit(app.exec_())

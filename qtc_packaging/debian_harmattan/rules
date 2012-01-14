@@ -7,7 +7,7 @@
 # This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+export DH_VERBOSE=1
 
 
 
@@ -60,7 +60,7 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs 
+	dh_installchangelogs
 	dh_installdocs
 	dh_installexamples
 #	dh_install
@@ -81,11 +81,12 @@ binary-arch: build install
 	dh_fixperms
 #	dh_perl
 #	dh_makeshlibs
-	dh_installdeb
-	# dh_shlibdeps # Uncomment this line for use without Qt Creator
+	dh_installdeb	
+    # dh_shlibdeps # Uncomment this line for use without Qt Creator
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
+
