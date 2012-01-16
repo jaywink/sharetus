@@ -6,49 +6,87 @@ Page {
 
     property variant share_url: sharer.share_url_str
     property variant share_title: sharer.share_title_str
-    
+
+    HeaderLabel {
+        id: headerLabel
+    }
     Rectangle {
-        id: canvas
-        color: "black"
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width
-        height: parent.height
-      
-        Text {
-            id: app_name
-            text: "Sharetus"
-            anchors.horizontalCenter: parent.horizontalCenter
+        id: labelContainer
+        anchors.top: headerLabel.bottom
+        width: page.width
+        implicitHeight: titleLabel.implicitHeight + urlLabel.implicitHeight
+
+        Label {
+            id: titleLabel
+            width: page.width
             color: "steelblue"
-            font.family: "Nokia Pure Text"
-            font.bold: true
-            font.pixelSize: 48
+            font {
+                family: "Nokia Pure Text"
+                pixelSize: 32
+                bold: true
+            }
+            text: page.share_title
         }
 
-        Text {
-            id: share_url
-            text: "URL: " + page.share_url
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: app_name.bottom
-            anchors.topMargin: 20
+        Label {
+            id: urlLabel
+            width: page.width
+            anchors.top: titleLabel.bottom
             color: "steelblue"
-            font.family: "Nokia Pure Text"
-            font.bold: false
-            font.pixelSize: 24
+            font {
+                family: "Nokia Pure Text"
+                pixelSize: 32
+                bold: true
+            }
+            text: page.share_url
         }
+    }
 
-        Text {
-            id: share_title
-            text: "Title: " + page.share_title
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: share_url.bottom
-            anchors.topMargin: 20
-            color: "steelblue"
-            font.family: "Nokia Pure Text"
-            font.bold: false
-            font.pixelSize: 24
-        }
-      
-        Flickable {
+    List {
+        id: listPage
+        width: page.width
+        height: page.height*0.9
+        anchors.top: labelContainer.bottom
+    }
+
+//    Rectangle {
+//        id: canvas
+//        color: "black"
+////        anchors.horizontalCenter: parent.horizontalCenter
+
+////        width: page.width
+
+//          anchors.top: headerLabel.bottom
+
+
+//        Text {
+//            id: share_url
+//            text: "URL: " + page.share_url
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.topMargin: 20
+//            width: page.width
+//            color: "steelblue"
+//            font.family: "Nokia Pure Text"
+//            font.bold: false
+//            font.pixelSize: 24
+//        }
+
+//        Text {
+//            id: share_title
+//            text: "Title: " + page.share_title
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.top: share_url.bottom
+//            anchors.topMargin: 20
+//            width: page.width
+//            color: "steelblue"
+//            font.family: "Nokia Pure Text"
+//            font.bold: false
+//            font.pixelSize: 24
+//        }
+
+
+
+        /*Flickable {
             id: flicker
             boundsBehavior: Flickable.StopAtBounds
             width: parent.width
@@ -75,6 +113,6 @@ Page {
                 }
                 
             }    
-        }
-    }
+        }*/
+//    }
 }
