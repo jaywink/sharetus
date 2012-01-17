@@ -22,7 +22,8 @@ OTHER_FILES += \
         qml/HeaderLabel.qml  \
 	sharetus \
 	sharetus.png \
-    qml/List.qml
+    qml/List.qml \
+    qml/URLInfo.qml
 
 SOURCES += \
     sharetusmethod.cpp sharetusplugin.cpp
@@ -36,7 +37,7 @@ CONFIG += mdatauri shareui share-ui-plugin share-ui-common qt debug plugin link_
 
 target.path = /usr/lib/share-ui/plugins
 
-qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/HeaderLabel.qml qml/List.qml
+qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/HeaderLabel.qml qml/List.qml qml/URLInfo.qml
 qml.path = /opt/sharetus/qml
 
 python.files = sharetus

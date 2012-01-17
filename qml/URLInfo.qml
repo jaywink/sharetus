@@ -1,4 +1,4 @@
-/*
+/**
  * S H A R E T U S
  *
  * Plugin for Harmattan Share UI for sharing to various social
@@ -21,25 +21,40 @@
  *
  */
 
+import QtQuick 1.1
+import com.nokia.meego 1.0
 
-#include "sharetusplugin.h"
-#include "sharetusmethod.h"
- 
-SharetusPlugin::SharetusPlugin (QObject * parent) :
-    ShareUI::PluginBase (parent) {
+Rectangle {
+    id: labelContainer
+    anchors.top: headerLabel.bottom
+    anchors.topMargin: 10
+    width: page.width
+    implicitHeight: titleLabel.implicitHeight + urlLabel.implicitHeight
+    color: "black"
 
+    Label {
+        id: titleLabel
+        width: page.width
+        color: "#5ce2e6"
+        font {
+            family: "Nokia Pure Text"
+            pixelSize: 32
+            bold: true
+        }
+        text: page.share_title
+
+    }
+
+    Label {
+        id: urlLabel
+        width: page.width
+        anchors.top: titleLabel.bottom
+        color: "#5ce2e6"
+        font {
+            family: "Nokia Pure Text"
+            pixelSize: 28
+            bold: false
+        }
+        text: page.share_url
+    }
 }
-
-SharetusPlugin::~SharetusPlugin () {
-}
-
-QList<ShareUI::MethodBase *> SharetusPlugin::methods (QObject * parent) {
-
-    QList<ShareUI::MethodBase *> list;
-    
-    list.append (new SharetusMethod(parent));
-    
-    return list;
-}
-
-Q_EXPORT_PLUGIN2(cmd, SharetusPlugin)

@@ -1,3 +1,26 @@
+/**
+ * S H A R E T U S
+ *
+ * Plugin for Harmattan Share UI for sharing to various social
+ * and bookmarking sites.
+ *
+ * See Github for details: https://github.com/jaywink/sharetus
+ *
+ * Copyright (c) 2012 Jason Robinson (jaywink@basshero.org).
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms are permitted
+ * provided that the above copyright notice and this paragraph are
+ * duplicated in all such forms and that any documentation,
+ * advertising materials, and other materials related to such
+ * distribution and use acknowledge that the software was developed
+ * by the Jason Robinson.
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ */
+
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
@@ -7,112 +30,26 @@ Page {
     property variant share_url: sharer.share_url_str
     property variant share_title: sharer.share_title_str
 
-    HeaderLabel {
-        id: headerLabel
-    }
     Rectangle {
-        id: labelContainer
-        anchors.top: headerLabel.bottom
-        width: page.width
-        implicitHeight: titleLabel.implicitHeight + urlLabel.implicitHeight
+        id: canvas
+        color: "black"
+        width: parent.width
+        height: parent.height
 
-        Label {
-            id: titleLabel
-            width: page.width
-            color: "steelblue"
-            font {
-                family: "Nokia Pure Text"
-                pixelSize: 32
-                bold: true
-            }
-            text: page.share_title
+        HeaderLabel {
+            id: headerLabel
         }
 
-        Label {
-            id: urlLabel
+        URLInfo {
+            id: labelContainer
+        }
+
+        List {
+            id: listPage
             width: page.width
-            anchors.top: titleLabel.bottom
-            color: "steelblue"
-            font {
-                family: "Nokia Pure Text"
-                pixelSize: 32
-                bold: true
-            }
-            text: page.share_url
+            height: page.height*0.9
+            anchors.top: labelContainer.bottom
+            anchors.topMargin: 30
         }
     }
-
-    List {
-        id: listPage
-        width: page.width
-        height: page.height*0.9
-        anchors.top: labelContainer.bottom
-    }
-
-//    Rectangle {
-//        id: canvas
-//        color: "black"
-////        anchors.horizontalCenter: parent.horizontalCenter
-
-////        width: page.width
-
-//          anchors.top: headerLabel.bottom
-
-
-//        Text {
-//            id: share_url
-//            text: "URL: " + page.share_url
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.topMargin: 20
-//            width: page.width
-//            color: "steelblue"
-//            font.family: "Nokia Pure Text"
-//            font.bold: false
-//            font.pixelSize: 24
-//        }
-
-//        Text {
-//            id: share_title
-//            text: "Title: " + page.share_title
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.top: share_url.bottom
-//            anchors.topMargin: 20
-//            width: page.width
-//            color: "steelblue"
-//            font.family: "Nokia Pure Text"
-//            font.bold: false
-//            font.pixelSize: 24
-//        }
-
-
-
-        /*Flickable {
-            id: flicker
-            boundsBehavior: Flickable.StopAtBounds
-            width: parent.width
-            height: parent.height
-            flickableDirection: Flickable.VerticalFlick
-            contentHeight: parent.height
-            pressDelay: 100
-      
-            Rectangle {
-                id: main
-                color: "black"
-                y: 200
-                width: parent.width
-                height: parent.height
-                
-                Grid {
-                    id: services
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    rows: 2; columns: 3; spacing: 30
-                    Service { text: "Diaspora*"; onClicked: { sharer.share("diaspora") } }
-                    Service { text: "Twitter"; onClicked: { sharer.share("twitter") } }
-                    Service { text: "Facebook"; onClicked: { sharer.share("facebook") } }
-
-                }
-                
-            }    
-        }*/
-//    }
 }
