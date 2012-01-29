@@ -24,7 +24,7 @@
  *
 '''
 
-from BeautifulSoup import BeautifulSoup
+#from BeautifulSoup import BeautifulSoup
 from PySide import QtCore
 from PySide import QtGui
 from PySide import QtDeclarative
@@ -64,9 +64,9 @@ class Sharer(QtCore.QObject):
         
     @QtCore.Slot(str)
     def share(self, service):
-        page = urllib.urlopen(self.share_url.replace(' ','+')).read()
-        soup = BeautifulSoup(page)
-        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.share_url)).replace('{{title}}',urllib.quote(soup.head.title.contents[0].strip('\r\n')))
+        #page = urllib.urlopen(self.share_url.replace(' ','+')).read()
+        #soup = BeautifulSoup(page)
+        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.share_url)).replace('{{title}}',urllib.quote(self.share_title))
         QtGui.QDesktopServices.openUrl(share_url)
         
     def get_share_url(self):
