@@ -29,6 +29,7 @@ import com.nokia.meego 1.0
         id: listPage
         width: page.width
         color: "black"
+        clip: true
 
         ListModel {
              id: listModel
@@ -79,6 +80,8 @@ import com.nokia.meego 1.0
              id: listView
              anchors.fill: parent
              model: listModel
+             boundsBehavior: Flickable.DragAndOvershootBounds
+
              delegate:  Item {
                  id: listItem
                  height: 52

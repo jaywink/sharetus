@@ -42,12 +42,14 @@ Page {
 
         URLInfo {
             id: labelContainer
+            anchors.top: headerLabel.bottom
+            anchors.topMargin: 10
         }
 
         List {
             id: listPage
             width: page.width
-            height: page.height*0.9
+            height: page.height - labelContainer.implicitHeight - headerLabel.implicitHeight
             anchors.top: labelContainer.bottom
             anchors.topMargin: 30
         }

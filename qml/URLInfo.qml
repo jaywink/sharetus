@@ -26,8 +26,6 @@ import com.nokia.meego 1.0
 
 Rectangle {
     id: labelContainer
-    anchors.top: headerLabel.bottom
-    anchors.topMargin: 10
     width: page.width
     implicitHeight: titleLabel.implicitHeight + urlLabel.implicitHeight
     color: "black"
