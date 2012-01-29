@@ -1,5 +1,12 @@
+sharetus (0.2.0) unstable; urgency=low
+  * Fixed target list from scrolling on top of header and url labels
+  * Removed Python-BeautifulSoup dependency
+  * Share title is now taken from Share UI
+
+ -- Jason Robinson <jaywink@basshero.org>  Sun, 29 Jan 2012 20:59:24 +0200
+
 sharetus (0.0.1) unstable; urgency=low
 
   * Initial Release.
 
- -- Jason Robinson <jaywink@unknown>  Fri, 13 Jan 2012 22:59:59 +0200
+ -- Jason Robinson <jaywink@basshero.org>  Fri, 13 Jan 2012 22:59:59 +0200
