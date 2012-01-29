@@ -72,7 +72,7 @@ void SharetusMethod::selected (const ShareUI::ItemContainer * items) {
         }
     }
 
-    cmd += " '" + url + "' '" + text + "'";
+    cmd += " \"" + url + "\" \"" + text + "\"";
 
     if (1) { // Debug
         QFile file("/tmp/out.txt");
