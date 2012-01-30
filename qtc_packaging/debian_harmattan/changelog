@@ -1,3 +1,8 @@
+sharetus (0.2.1) unstable; urgency=low
+  * Fixed issue with bottom targets not visible when scrolling
+
+ -- Jason Robinson <jaywink@basshero.org>  Mon, 30 Jan 2012 17:30:11 +0200
+
 sharetus (0.2.0) unstable; urgency=low
   * Fixed target list from scrolling on top of header and url labels
   * Removed Python-BeautifulSoup dependency
