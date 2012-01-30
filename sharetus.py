@@ -37,9 +37,11 @@ class Sharer(QtCore.QObject):
     share_url = ""
     share_title = ""
     
+    params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign']
+    
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)
-        self.share_url = share_url
+        self.share_url = self.clean_url(share_url)
         self.share_title = share_title
         self.app = QtGui.QApplication(sys.argv)
         self.view = QtDeclarative.QDeclarativeView()
@@ -78,6 +80,26 @@ class Sharer(QtCore.QObject):
     on_get = QtCore.Signal()
     share_url_str = QtCore.Property(str, get_share_url, notify=on_get)
     share_title_str = QtCore.Property(str, get_share_title, notify=on_get)
+    
+    def clean_url(self, url):
+        # cleans url of unnecessary parameters
+        final_params = []
+        try:
+            if url.find('?') > -1:
+                # params found
+                params = url[url.find('?')+1:].split('&')
+                for param in params:
+                    key = param.split('=')[0]
+                    if key not in self.params_to_clean:
+                        final_params.append(param)
+                if len(final_params) > 0:
+                    url = url[0:url.find('?')+1] + '&'.join(final_params)
+                else:
+                    url = url[0:url.find('?')]
+        except:
+            #never fail due to exception
+            pass
+        return url
     
 
 # INIT APP
