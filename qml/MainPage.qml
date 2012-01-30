@@ -43,15 +43,13 @@ Page {
         URLInfo {
             id: labelContainer
             anchors.top: headerLabel.bottom
-            anchors.topMargin: 10
         }
 
         List {
             id: listPage
             width: page.width
-            height: page.height - labelContainer.implicitHeight - headerLabel.implicitHeight
+            height: page.height - labelContainer.implicitHeight - headerLabel.height
             anchors.top: labelContainer.bottom
-            anchors.topMargin: 30
         }
     }
 }
