@@ -38,6 +38,18 @@ class Sharer(QtCore.QObject):
     share_title = ""
     
     params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign']
+    target_url = {  "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&v=1&noui=1&jump=doclose",
+                    "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
+                    "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}",
+                    "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
+                    "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes=",
+                    "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=",
+                    "gtranslate":"http://translate.google.com/translate?u={{url}}&sl=auto",
+                    "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
+                    "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
+                    "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}"
+                 }                            
+    hashtag_targets = ['twitter', 'diaspora']
     
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)
@@ -49,20 +61,8 @@ class Sharer(QtCore.QObject):
         self.context.setContextProperty('sharer', self)
         self.view.setSource(QtCore.QUrl('/opt/sharetus/qml/main.qml'))
         self.view.showFullScreen()
-        
-        self.target_url = { "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&v=1&noui=1&jump=doclose",
-                            "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
-                            "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}",
-                            "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
-                            "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes=",
-                            "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=",
-                            "gtranslate":"http://translate.google.com/translate?u={{url}}&sl=auto",
-                            "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
-                            "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
-                            "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}"
-                        }
-        self.app.exec_()
-                
+
+        self.app.exec_()                
         
     @QtCore.Slot(str)
     def share(self, service):
