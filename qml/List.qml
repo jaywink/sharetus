@@ -24,6 +24,7 @@
 
 import QtQuick 1.1
 import com.nokia.meego 1.0
+import QtMobility.feedback 1.1
 
     Rectangle {
         id: listPage
@@ -112,9 +113,19 @@ import com.nokia.meego 1.0
                      }
                  }
 
+                 HapticsEffect {
+                      id: rumbleEffect
+                      attackIntensity: 0.0
+                      attackTime: 250
+                      intensity: 1.0
+                      duration: 100
+                      fadeTime: 250
+                      fadeIntensity: 0.0
+                  }
+
                  MouseArea {
                      anchors.fill: parent
-                     onClicked: { sharer.share(model.identifier) }
+                     onClicked: { rumbleEffect.start(); sharer.share(model.identifier); }
                  }
              }
          }
