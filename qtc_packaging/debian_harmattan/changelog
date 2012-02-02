@@ -1,3 +1,9 @@
+sharetus (0.2.4) unstable; urgency=low
+  * Added Google+ as target, using mobile sharing page which afaik is only way to share via URL
+  * Added utm_content and utm_term to filtered url tags
+
+ -- Jason Robinson <jaywink@basshero.org>  Thu, 02 Feb 2012 22:11:32 +0200
+
 sharetus (0.2.3) unstable; urgency=low
   * Added haptics 'rumble' when target name is pressed
 
