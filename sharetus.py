@@ -41,6 +41,7 @@ class Sharer(QtCore.QObject):
     target_url = {  "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&v=1&noui=1&jump=doclose",
                     "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
                     "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}",
+                    "gplus"    : "https://m.google.com/app/plus/x/yul54f5ur0cl/?content={{url}}+-+{{title}}&v=compose&hideloc=1",
                     "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
                     "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes=",
                     "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=",
@@ -49,7 +50,7 @@ class Sharer(QtCore.QObject):
                     "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
                     "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}"
                  }                            
-    hashtag_targets = ['twitter', 'diaspora']
+    hashtag_targets = ['twitter', 'diaspora', 'gplus']
     
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)

@@ -47,6 +47,10 @@ import QtMobility.feedback 1.1
                  identifier: "twitter"
              }
              ListElement {
+                 title: "Google+"
+                 identifier: "gplus"
+             }
+             ListElement {
                  title: "LinkedIn"
                  identifier: "linkedin"
              }
