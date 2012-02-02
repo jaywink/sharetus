@@ -37,7 +37,7 @@ class Sharer(QtCore.QObject):
     share_url = ""
     share_title = ""
     
-    params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign']
+    params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
     target_url = {  "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&v=1&noui=1&jump=doclose",
                     "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
                     "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}",
