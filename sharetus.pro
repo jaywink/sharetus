@@ -18,7 +18,6 @@ OTHER_FILES += \
 	qtc_packaging/debian_harmattan/changelog \
 	qml/main.qml \
 	qml/MainPage.qml \
-	qml/Service.qml \
         qml/HeaderLabel.qml  \
 	sharetus.py \
 	sharetus.png \
