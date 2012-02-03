@@ -27,6 +27,12 @@ import com.nokia.meego 1.0
 Page {
     id: page
 
+    tools: ToolBarLayout {
+        visible: true
+        ToolButton { text: "Tags"; anchors.centerIn: parent; onClicked: pageStack.push(tagPage)  }
+
+    }
+
     property variant share_url: sharer.share_url_str
     property variant share_title: sharer.share_title_str
 
