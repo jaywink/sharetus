@@ -9,7 +9,7 @@ Homepage: http://basshero.org
 
 Package: sharetus
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python-pyside.qtgui, python-pyside.qtopengl, python-pyside.qtdeclarative
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-pyside.qtgui, python-pyside.qtopengl, python-pyside.qtdeclarative, python-qtsparql
 Description: Share an url to many social network services.
  Sharetus is an application to share urls to many different social
  networking or bookmarking sites.

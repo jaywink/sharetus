@@ -28,6 +28,7 @@
 from PySide import QtCore
 from PySide import QtGui
 from PySide import QtDeclarative
+import QtSparql
 import urllib
 import re
 import sys
