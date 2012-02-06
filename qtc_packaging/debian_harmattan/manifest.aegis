@@ -42,14 +42,14 @@ AutoGenerateAegisFile
 	-->
 
 		<!-- Read access to data stored in tracker. -->
-	<!--
+	
 		<credential name="TrackerReadAccess" />
-	-->
+	
 
 		<!-- Read and write access to data stored in tracker. -->
-	<!--
+	
 		<credential name="TrackerWriteAccess" />
-	-->
+	
 
 		<!-- Read Location information. -->
 	<!--
@@ -65,6 +65,7 @@ AutoGenerateAegisFile
 
 	</request>
 
-	<for path="/opt/sharetus/bin/sharetus" />
+	<for path="/opt/sharetus/sharetus.py" />
+	<for path="/usr/bin/python" />
 	<for path="applauncherd-launcher::/usr/bin/applauncherd.bin" id="" />
 </aegis>

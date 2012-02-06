@@ -55,16 +55,43 @@ class Sharer(QtCore.QObject):
     
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)
+        self.log = open('/tmp/sharetus.debug', 'w')
         self.share_url = self.clean_url(share_url)
         self.share_title = share_title
         self.app = QtGui.QApplication(sys.argv)
         self.view = QtDeclarative.QDeclarativeView()
         self.context = self.view.rootContext()
         self.context.setContextProperty('sharer', self)
+        self.tracker = self.get_tracker_conn()
         self.view.setSource(QtCore.QUrl('/opt/sharetus/qml/main.qml'))
         self.view.showFullScreen()
-
-        self.app.exec_()                
+        self.app.exec_()
+        self.log.close()
+        
+    def get_tracker_conn(self):
+        connection = QtSparql.QSparqlConnection("QTRACKER")
+        if connection.isValid():
+            self.log.write("Driver found\n")
+        else:
+            self.log.write( "Driver not found\n")
+        return connection
+        
+    def get_tracker_tags(self):
+        query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag}")
+        result = self.tracker.exec_(query)
+        result.waitForFinished()
+        if not result.hasError():
+            self.log.write( "Executing query ok\n")
+        else: 
+            self.log.write( "Executing query failed\n")
+            return []
+        tags = []
+        while result.next():
+            self.log.write( result.binding(0).value() +'\n')
+            if len(result.binding(0).value()) > 0:
+                tags.append(result.binding(0).value())
+        self.log.write(','.join(tags))
+        return ','.join(tags)
         
     @QtCore.Slot(str)
     def share(self, service):
@@ -82,6 +109,7 @@ class Sharer(QtCore.QObject):
     on_get = QtCore.Signal()
     share_url_str = QtCore.Property(str, get_share_url, notify=on_get)
     share_title_str = QtCore.Property(str, get_share_title, notify=on_get)
+    tags = QtCore.Property(str, get_tracker_tags, notify=on_get)
     
     def clean_url(self, url):
         # cleans url of unnecessary parameters

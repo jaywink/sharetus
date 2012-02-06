@@ -52,7 +52,7 @@ void SharetusMethod::selected (const ShareUI::ItemContainer * items) {
 
     Q_UNUSED (items);
 
-    QString cmd = "python /opt/sharetus/sharetus.py";
+    QString cmd = "/usr/bin/python /opt/sharetus/sharetus.py";
     QString text;
     QString url;
     QString excerpt;
