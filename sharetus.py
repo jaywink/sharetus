@@ -2,25 +2,13 @@
 # -*- coding: utf-8 -*-
 
 '''
- * S H A R E T U S
+/**
+ * Part of Sharetus, Share UI plugin for Harmattan
  *
- * Plugin for Harmattan Share UI for sharing to various social
- * and bookmarking sites.
- *
- * See Github for details: https://github.com/jaywink/sharetus
- *
- * Contributions from elsewhere:
- *   - Python classes TagWrapper, TagListModel, TagController
- *     and Tag, which are based on the example from
- *     http://developer.qt.nokia.com/wiki/Selectable_list_of_Python_objects_in_QML
- *   - C++ classes SharetusPlugin and SharetusMethod, which are based
- *     on CmdShare by Tuomas Kulve
- *     http://tuomas.kulve.fi/blog/2012/01/12/command-line-sharing-for-harmattan/
- *
- * Otherwise the following licence is valid:
+ * See: https://github.com/jaywink/sharetus
  *
  * Copyright (c) 2012 Jason Robinson (jaywink@basshero.org).
- * All rights reserved.
+ * Except for exceptions mentioned in README, All rights reserved.
  *
  * Redistribution and use in source and binary forms are permitted
  * provided that the above copyright notice and this paragraph are
@@ -32,6 +20,7 @@
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  *
+ */
 '''
 
 #from BeautifulSoup import BeautifulSoup
