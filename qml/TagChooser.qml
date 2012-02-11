@@ -43,24 +43,49 @@ Page {
             anchors.fill: parent
 
             delegate: Component {
+
                 Rectangle {
+                    id: wrapper
                     width: tagList.width
-                    height: 40
+                    height: 70
                     color: ((index % 2 == 0)?"#222":"#111")
+
                     Text {
                         id: title
                         elide: Text.ElideRight
                         text: model.tag.name
                         color: "white"
-                        font.bold: true
-                        anchors.leftMargin: 10
-                        anchors.fill: parent
-                        verticalAlignment: Text.AlignVCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        font {
+                            family: "Nokia Pure Text"
+                            pixelSize: 50
+                            bold: true
+                        }
+
+                        function toggle() {
+                            if (state=="on") {state = "off"} else { state ="on"}
+                        }
+
+                        states: [
+                            State {
+                             name: "on"
+                             PropertyChanges { target: title; color: "green" }
+                            },
+                            State {
+                             name: "off"
+                             PropertyChanges { target: title; color: "white" }
+                            }
+                        ]
                     }
+
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: { controller.tagSelected(model.tag) }
+                        onClicked: title.toggle()
+//                         controller.tagSelected(model.tag)
                     }
+
                }
            }
 
