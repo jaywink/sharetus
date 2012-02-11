@@ -10,19 +10,41 @@ Page {
         ToolItem { iconId: "icon-m-toolbar-back"; onClicked: pageStack.pop(); }
     }
 
-    property variant tags: sharer.tags
-
     Rectangle {
         width: tagPage.width
         height: tagPage.height
 
         color: "black"
 
-        Text {
-            text: "This is the tag list<br><br>Thags in Tracker DB:<br><br>"+tagPage.tags
-            anchors.centerIn: parent
-            color: "white"
-        }
+        ListView {
+            id: tagList
+            model: tagListModel
+            anchors.horizontalCenter: parent
+            anchors.fill: parent
 
-    }
+            delegate: Component {
+                Rectangle {
+                    width: tagList.width
+                    height: 40
+                    color: ((index % 2 == 0)?"#222":"#111")
+                    Text {
+                        id: title
+                        elide: Text.ElideRight
+                        text: model.tag.name
+                        color: "white"
+                        font.bold: true
+                        anchors.leftMargin: 10
+                        anchors.fill: parent
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: { controller.tagSelected(model.tag) }
+                    }
+               }
+           }
+
+       }
+   }
+
 }

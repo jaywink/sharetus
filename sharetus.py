@@ -9,6 +9,16 @@
  *
  * See Github for details: https://github.com/jaywink/sharetus
  *
+ * Contributions from elsewhere:
+ *   - Python classes TagWrapper, TagListModel, TagController
+ *     and Tag, which are based on the example from
+ *     http://developer.qt.nokia.com/wiki/Selectable_list_of_Python_objects_in_QML
+ *   - C++ classes SharetusPlugin and SharetusMethod, which are based
+ *     on CmdShare by Tuomas Kulve
+ *     http://tuomas.kulve.fi/blog/2012/01/12/command-line-sharing-for-harmattan/
+ *
+ * Otherwise the following licence is valid:
+ *
  * Copyright (c) 2012 Jason Robinson (jaywink@basshero.org).
  * All rights reserved.
  *
@@ -17,7 +27,7 @@
  * duplicated in all such forms and that any documentation,
  * advertising materials, and other materials related to such
  * distribution and use acknowledge that the software was developed
- * by the Jason Robinson.
+ * by Jason Robinson.
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
@@ -55,43 +65,8 @@ class Sharer(QtCore.QObject):
     
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)
-        self.log = open('/tmp/sharetus.debug', 'w')
         self.share_url = self.clean_url(share_url)
         self.share_title = share_title
-        self.app = QtGui.QApplication(sys.argv)
-        self.view = QtDeclarative.QDeclarativeView()
-        self.context = self.view.rootContext()
-        self.context.setContextProperty('sharer', self)
-        self.tracker = self.get_tracker_conn()
-        self.view.setSource(QtCore.QUrl('/opt/sharetus/qml/main.qml'))
-        self.view.showFullScreen()
-        self.app.exec_()
-        self.log.close()
-        
-    def get_tracker_conn(self):
-        connection = QtSparql.QSparqlConnection("QTRACKER")
-        if connection.isValid():
-            self.log.write("Driver found\n")
-        else:
-            self.log.write( "Driver not found\n")
-        return connection
-        
-    def get_tracker_tags(self):
-        query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag}")
-        result = self.tracker.exec_(query)
-        result.waitForFinished()
-        if not result.hasError():
-            self.log.write( "Executing query ok\n")
-        else: 
-            self.log.write( "Executing query failed\n")
-            return []
-        tags = []
-        while result.next():
-            self.log.write( result.binding(0).value() +'\n')
-            if len(result.binding(0).value()) > 0:
-                tags.append(result.binding(0).value())
-        self.log.write(','.join(tags))
-        return ','.join(tags)
         
     @QtCore.Slot(str)
     def share(self, service):
@@ -109,7 +84,6 @@ class Sharer(QtCore.QObject):
     on_get = QtCore.Signal()
     share_url_str = QtCore.Property(str, get_share_url, notify=on_get)
     share_title_str = QtCore.Property(str, get_share_title, notify=on_get)
-    tags = QtCore.Property(str, get_tracker_tags, notify=on_get)
     
     def clean_url(self, url):
         # cleans url of unnecessary parameters
@@ -131,14 +105,101 @@ class Sharer(QtCore.QObject):
             pass
         return url
     
+    
+class TagWrapper(QtCore.QObject):
+    def __init__(self, tag):
+        QtCore.QObject.__init__(self)
+        self._tag = tag
+
+    def _name(self):
+        return str(self._tag)
+
+    changed = QtCore.Signal()
+
+    name = QtCore.Property(unicode, _name, notify=changed)
+
+
+class TagListModel(QtCore.QAbstractListModel):
+    COLUMNS = ('tag',)
+ 
+    def __init__(self, tags):
+        QtCore.QAbstractListModel.__init__(self)
+        self._tags = tags
+        self.setRoleNames(dict(enumerate(TagListModel.COLUMNS)))
+ 
+    def rowCount(self, parent=QtCore.QModelIndex()):
+        return len(self._tags)
+ 
+    def data(self, index, role):
+        if index.isValid() and role == TagListModel.COLUMNS.index('tag'):
+            return self._tags[index.row()]
+        return None
+
+
+class TagController(QtCore.QObject):
+    
+    def __init__(self, log):
+        QtCore.QObject.__init__(self)
+        self.log = log
+    
+    @QtCore.Slot(QtCore.QObject)
+    def tagSelected(self, wrapper):
+        log.write('User clicked on:'+ wrapper._tag.name)
+
+
+class Tag(object):
+    def __init__(self, name):
+        self.name = name
+ 
+    def __str__(self):
+        return self.name
+
 
 # INIT APP
+
+log = open('/tmp/sharetus.debug', 'w')
 
 try:
     share_url = sys.argv[1].replace("'","")
     share_title = sys.argv[2].replace("'","")
 except:
+    log.write("Please supply url and title as parameters")
     sys.exit("Please supply url and title as parameters")
 
+app = QtGui.QApplication(sys.argv)
+view = QtDeclarative.QDeclarativeView()
+context = view.rootContext()
+
+# get tags from tracker    
+connection = QtSparql.QSparqlConnection("QTRACKER")    
+query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag}")
+result = connection.exec_(query)
+result.waitForFinished()
+
+if result.hasError():
+    log.write("Executing query failed")
+    
+tag_list = []
+log.write(str(result.size()))
+while result.next():
+    if len(result.binding(0).value()) > 0:
+        log.write(result.binding(0).value())
+        tag_list.append(Tag(result.binding(0).value()))
+
+# set tag model
+tags = [TagWrapper(tag) for tag in tag_list]
+controller = TagController(log)
+tag_model = TagListModel(tags)
+
+# init sharer
 sharer = Sharer(share_url, share_title)
+
+context.setContextProperty('sharer', sharer)
+context.setContextProperty('controller', controller)
+context.setContextProperty('tagListModel', tag_model)
+view.setSource(QtCore.QUrl('/opt/sharetus/qml/main.qml'))
+view.showFullScreen()
+app.exec_()
+
+log.close()
 
