@@ -54,7 +54,7 @@ Page {
                         id: title
                         elide: Text.ElideRight
                         text: model.tag.name
-                        color: "white"
+//                        color: "white"
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -64,18 +64,25 @@ Page {
                             bold: true
                         }
 
+                        // thanks to this post for help on toggling items
+                        // http://jryannel.wordpress.com/2010/02/07/a-toggle-button-with-states/
                         function toggle() {
                             if (state=="on") {state = "off"} else { state ="on"}
                         }
+
+                        property bool on: false
+                        state: "off"
 
                         states: [
                             State {
                              name: "on"
                              PropertyChanges { target: title; color: "green" }
+                             PropertyChanges { target: title; on: true }
                             },
                             State {
                              name: "off"
                              PropertyChanges { target: title; color: "white" }
+                             PropertyChanges { target: title; on: false }
                             }
                         ]
                     }
