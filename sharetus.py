@@ -208,7 +208,7 @@ while result.next():
         tag_list.append(Tag(result.binding(0).value()))
 
 # debug
-tag_list = tag_list + [Tag('debug1'), Tag('debug2')]
+#tag_list = tag_list + [Tag('debug1'), Tag('debug2')]
 
 # set tag model
 tags = [TagWrapper(tag) for tag in tag_list]
