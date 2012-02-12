@@ -1,3 +1,12 @@
+sharetus (0.3.0) unstable; urgency=low
+  * Tag page for selecting tags from Tracker DB, which is also used
+    by device gallery. New tags cannot be added yet in this version.
+  * Tags are added to Diaspora*, Twitter, Google+ and Ping FM sharing
+  * Diaspora* share title is bolded with markdown
+  * New dependency Python-QtSParql for accessing Tracker DB
+
+ -- Jason Robinson <jaywink@basshero.org>  Sun, 12 Feb 2012 22:18:28 +0200
+
 sharetus (0.2.4) unstable; urgency=low
   * Added Google+ as target, using mobile sharing page which afaik is only way to share via URL
   * Added utm_content and utm_term to filtered url tags
