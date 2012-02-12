@@ -50,7 +50,9 @@ class Sharer(QtCore.QObject):
                     "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
                     "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
                     "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}+{{tags}}"
-                 }                            
+                 }                      
+                 
+    title_styles = {'diaspora'  : ['markdown_bold']}
     
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)
@@ -61,14 +63,26 @@ class Sharer(QtCore.QObject):
     def share(self, service):
         #page = urllib.urlopen(self.share_url.replace(' ','+')).read()
         #soup = BeautifulSoup(page)
-        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.share_url)).replace('{{title}}',urllib.quote(self.share_title)).replace('{{tags}}',urllib.quote(self.process_tags())).replace('{{text}}',urllib.quote(self.process_notes()))
+        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
         QtGui.QDesktopServices.openUrl(share_url)
 
-    def process_notes(self):
+    def process_title(self, service):
+        title = self.share_title
+        if service in self.title_styles.keys():
+            styles = self.title_styles[service]
+            for style in styles:
+                if style == 'markdown_bold':
+                    title = '**'+title+'**'
+        return title
+    
+    def process_url(self, service):
+        return self.share_url
+
+    def process_notes(self, service):
         notes = ''
         return notes
         
-    def process_tags(self):
+    def process_tags(self, service):
         return " ".join(["#"+tag for tag in self.tags])
         
     def get_share_url(self):
