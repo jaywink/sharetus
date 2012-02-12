@@ -50,18 +50,9 @@ Page {
                     height: 70
                     color: ((index % 2 == 0)?"#222":"#111")
 
-                    Text {
+                    ListItem {
                         id: title
-                        elide: Text.ElideRight
                         text: model.tag.name
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        font {
-                            family: "Nokia Pure Text"
-                            pixelSize: 50
-                            bold: true
-                        }
 
                         // thanks to this post for help on toggling items
                         // http://jryannel.wordpress.com/2010/02/07/a-toggle-button-with-states/

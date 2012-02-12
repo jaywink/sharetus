@@ -34,46 +34,57 @@ import QtMobility.feedback 1.1
              ListElement {
                  title: "Diaspora*"
                  identifier: "diaspora"
+                 index: 0
              }
              ListElement {
                  title: "Facebook"
                  identifier: "facebook"
+                 index: 1
              }
              ListElement {
                  title: "Twitter"
                  identifier: "twitter"
+                 index: 2
              }
              ListElement {
                  title: "Google+"
                  identifier: "gplus"
+                 index: 3
              }
              ListElement {
                  title: "LinkedIn"
                  identifier: "linkedin"
+                 index: 4
              }
              ListElement {
                  title: "Tumblr"
                  identifier: "tumblr"
+                 index: 5
              }
              ListElement {
                  title: "DZone"
                  identifier: "dzone"
+                 index: 6
              }
              ListElement {
                  title: "Ping FM"
                  identifier: "pingfm"
+                 index: 7
              }
              ListElement {
                  title: "Delicious"
                  identifier: "delicious"
+                 index: 8
              }
              ListElement {
                  title: "Google Bookmarks"
                  identifier: "gbookmarks"
+                 index: 9
              }
              ListElement {
                  title: "Google Translate"
                  identifier: "gtranslate"
+                 index: 10
              }
 
          }
@@ -82,35 +93,21 @@ import QtMobility.feedback 1.1
              id: listView
              anchors.fill: parent
              model: listModel
-             boundsBehavior: Flickable.DragAndOvershootBounds
 
              delegate:  Item {
                  id: listItem
-                 height: 52
+                 height: 80
                  width: parent.width
 
-                 Item {
+                 Rectangle {
                      anchors.centerIn: parent.Center
                      anchors.fill: parent
+                     color: ((model.index % 2 == 0)?"#222":"#111")
 
-                     Label {
+                     ListItem {
                          id: mainText
                          text: model.title
-                         color: "#d3cfc0"
-                         font {
-                             family: "Nokia Pure Text"
-                             pixelSize: 48
-                             bold: true
-                         }
-                         anchors.horizontalCenter: parent.horizontalCenter
-
-                         // Border
-                         Rectangle {
-                             width: parent.width
-                             height: 1
-                             anchors.bottom: parent.bottom
-                             color: "white"
-                         }
+                         color: "white"
                      }
                  }
 
