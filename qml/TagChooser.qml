@@ -54,7 +54,6 @@ Page {
                         id: title
                         elide: Text.ElideRight
                         text: model.tag.name
-//                        color: "white"
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -67,7 +66,8 @@ Page {
                         // thanks to this post for help on toggling items
                         // http://jryannel.wordpress.com/2010/02/07/a-toggle-button-with-states/
                         function toggle() {
-                            if (state=="on") {state = "off"} else { state ="on"}
+                            if (state=="on") {state = "off"} else { state ="on"};
+                            controller.tagSelected(model.tag);
                         }
 
                         property bool on: false
@@ -90,7 +90,6 @@ Page {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: title.toggle()
-//                         controller.tagSelected(model.tag)
                     }
 
                }

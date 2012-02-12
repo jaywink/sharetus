@@ -36,21 +36,21 @@ class Sharer(QtCore.QObject):
     
     share_url = ""
     share_title = ""
+    tags = []
     
     params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
-    target_url = {  "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&v=1&noui=1&jump=doclose",
+    target_url = {  "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",
                     "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
-                    "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}",
-                    "gplus"    : "https://m.google.com/app/plus/x/?content={{url}}+-+{{title}}&v=compose&hideloc=1",
+                    "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}+{{tags}}",
+                    "gplus"    : "https://m.google.com/app/plus/x/?content={{url}}+-+{{title}}+{{tags}}&v=compose&hideloc=1",
                     "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
-                    "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes=",
+                    "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes={{text}}",
                     "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=",
                     "gtranslate":"http://translate.google.com/translate?u={{url}}&sl=auto",
                     "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
                     "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
-                    "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}"
+                    "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}+{{tags}}"
                  }                            
-    hashtag_targets = ['twitter', 'diaspora', 'gplus']
     
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)
@@ -61,8 +61,15 @@ class Sharer(QtCore.QObject):
     def share(self, service):
         #page = urllib.urlopen(self.share_url.replace(' ','+')).read()
         #soup = BeautifulSoup(page)
-        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.share_url)).replace('{{title}}',urllib.quote(self.share_title))
+        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.share_url)).replace('{{title}}',urllib.quote(self.share_title)).replace('{{tags}}',urllib.quote(self.process_tags())).replace('{{text}}',urllib.quote(self.process_notes()))
         QtGui.QDesktopServices.openUrl(share_url)
+
+    def process_notes(self):
+        notes = ''
+        return notes
+        
+    def process_tags(self):
+        return " ".join(["#"+tag for tag in self.tags])
         
     def get_share_url(self):
         return self.share_url
@@ -93,6 +100,12 @@ class Sharer(QtCore.QObject):
             #never fail due to exception
             pass
         return url
+        
+    def toggle_tag(self, tag):
+        if tag in self.tags:
+            self.tags.remove(tag)
+        else:
+            self.tags.append(tag)
     
     
 class TagWrapper(QtCore.QObject):
@@ -127,13 +140,15 @@ class TagListModel(QtCore.QAbstractListModel):
 
 class TagController(QtCore.QObject):
     
-    def __init__(self, log):
+    def __init__(self, log, sharer):
         QtCore.QObject.__init__(self)
         self.log = log
+        self.sharer = sharer
     
     @QtCore.Slot(QtCore.QObject)
     def tagSelected(self, wrapper):
         log.write('User clicked on:'+ wrapper._tag.name)
+        sharer.toggle_tag(wrapper._tag.name)
 
 
 class Tag(object):
@@ -159,6 +174,9 @@ app = QtGui.QApplication(sys.argv)
 view = QtDeclarative.QDeclarativeView()
 context = view.rootContext()
 
+# init sharer
+sharer = Sharer(share_url, share_title)
+
 # get tags from tracker    
 connection = QtSparql.QSparqlConnection("QTRACKER")    
 query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag}")
@@ -180,12 +198,10 @@ tag_list = tag_list + [Tag('debug1'), Tag('debug2')]
 
 # set tag model
 tags = [TagWrapper(tag) for tag in tag_list]
-controller = TagController(log)
+controller = TagController(log, sharer)
 tag_model = TagListModel(tags)
 
-# init sharer
-sharer = Sharer(share_url, share_title)
-
+# set contexts
 context.setContextProperty('sharer', sharer)
 context.setContextProperty('controller', controller)
 context.setContextProperty('tagListModel', tag_model)
