@@ -28,6 +28,7 @@ Page {
     tools: ToolBarLayout {
         visible: true
         ToolItem { iconId: "icon-m-toolbar-back"; onClicked: pageStack.pop(); }
+        ToolButton { text: "New"; anchors.centerIn: parent; onClicked: pageStack.push(tagNewPage)  }
     }
 
     Rectangle {

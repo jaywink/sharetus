@@ -21,26 +21,20 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
+Page {
+    id: tagNewPage
 
-PageStackWindow {
-    id: rootWindow
-    showStatusBar: true
+    tools: ToolBarLayout {
+        visible: true
+        ToolItem { iconId: "icon-m-toolbar-back"; onClicked: pageStack.pop(); }
+    }
 
-    initialPage: MainPage { }
+    Rectangle {
+        width: tagNewPage.width
+        height: tagNewPage.height
 
-    PageStack {
-        id: pageStack
+        color: "black"
 
-        TagChooser {
-            id: tagPage
-
-        }
-
-        NewTag {
-            id: tagNewPage
-
-        }
     }
 
 }
-
