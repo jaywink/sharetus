@@ -140,8 +140,15 @@ Page {
             }
 
             onClicked: {
-                newTagNameInput.closeSoftwareInputPanel()
-                dummy.focus = true
+                newTagNameInput.closeSoftwareInputPanel();
+                dummy.focus = true;
+                // save tag
+                if (newTagTrackerCheck.checked) {
+                    controller.save_tags(newTagNameInput.text, 'true');
+                } else {
+                    controller.save_tags(newTagNameInput.text, 'false');
+                }
+                pageStack.pop();
             }
         }
 

@@ -150,19 +150,40 @@ class TagListModel(QtCore.QAbstractListModel):
         if index.isValid() and role == TagListModel.COLUMNS.index('tag'):
             return self._tags[index.row()]
         return None
+        
+    def addItem(self, tag):
+        self.beginInsertRows(QtCore.QModelIndex(), 0, 0)
+        self._tags.append(TagWrapper(Tag(tag)))
+        self.endInsertRows()
 
 
 class TagController(QtCore.QObject):
     
-    def __init__(self, log, sharer):
+    def __init__(self, log, sharer, connection, tag_model):
         QtCore.QObject.__init__(self)
         self.log = log
         self.sharer = sharer
+        self.connection = connection
+        self.tag_model = tag_model
     
     @QtCore.Slot(QtCore.QObject)
     def tagSelected(self, wrapper):
         log.write('User clicked on:'+ wrapper._tag.name)
-        sharer.toggle_tag(wrapper._tag.name)
+        self.sharer.toggle_tag(wrapper._tag.name)
+        
+    @QtCore.Slot(str, str)
+    def save_tags(self, tags, to_database):
+        for tag in tags.split(','):
+            log.write('Adding tag: '+tag)
+            #self.sharer.toggle_tag(tag)
+            # add to model
+            self.tag_model.addItem(tag)
+            # save to database
+            if to_database == 'true':
+                query = QtSparql.QSparqlQuery("insert { _:a a nao:Tag ; nao:prefLabel '"+tag+"' . }", QtSparql.QSparqlQuery.InsertStatement)
+                result = connection.exec_(query)
+                result.waitForFinished()
+                log.write('Tag '+tag+' added to database')
 
 
 class Tag(object):
@@ -212,8 +233,8 @@ while result.next():
 
 # set tag model
 tags = [TagWrapper(tag) for tag in tag_list]
-controller = TagController(log, sharer)
 tag_model = TagListModel(tags)
+controller = TagController(log, sharer, connection, tag_model)
 
 # set contexts
 context.setContextProperty('sharer', sharer)
