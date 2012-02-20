@@ -151,8 +151,19 @@ class TagListModel(QtCore.QAbstractListModel):
             return self._tags[index.row()]
         return None
         
+    #def insertRows(self, count, parent, tags):
+        #self.beginInsertRows(QtCore.QModelIndex(), row, row+count-1);
+        #for tag in tags:
+            #self._tags.append(
+        #for (int row = 0; row < rows; ++row) {
+         #stringList.insert(position, "");
+     #}
+#
+     #endInsertRows();
+     #return true;
+        
     def addItem(self, tag):
-        self.beginInsertRows(QtCore.QModelIndex(), 0, 0)
+        self.beginInsertRows(QtCore.QModelIndex(), len(self._tags), len(self._tags)+1)
         self._tags.append(TagWrapper(Tag(tag)))
         self.endInsertRows()
 
