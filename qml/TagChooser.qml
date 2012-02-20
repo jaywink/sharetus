@@ -55,6 +55,8 @@ Page {
                         id: title
                         text: model.tag.name
 
+
+
                         // thanks to this post for help on toggling items
                         // http://jryannel.wordpress.com/2010/02/07/a-toggle-button-with-states/
                         function toggle() {
@@ -77,6 +79,8 @@ Page {
                              PropertyChanges { target: title; on: false }
                             }
                         ]
+
+                        Component.onCompleted: { title.state = controller.tagStatus(model.tag.name) }
                     }
 
                     MouseArea {

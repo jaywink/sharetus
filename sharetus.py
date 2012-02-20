@@ -186,7 +186,7 @@ class TagController(QtCore.QObject):
     def save_tags(self, tags, to_database):
         for tag in tags.split(','):
             log.write('Adding tag: '+tag)
-            #self.sharer.toggle_tag(tag)
+            self.sharer.toggle_tag(tag)
             # add to model
             self.tag_model.addItem(tag)
             # save to database
@@ -195,6 +195,17 @@ class TagController(QtCore.QObject):
                 result = connection.exec_(query)
                 result.waitForFinished()
                 log.write('Tag '+tag+' added to database')
+                
+    @QtCore.Slot(str, result=str)
+    def tagStatus(self, tag):
+        if tag in sharer.tags:
+            #print "tag",tag,"is on"
+            #log.write("tag "+tag+" is on")
+            return "on"
+        else:
+            #print "tag",tag,"is off"
+            #log.write("tag "+tag+" is off")
+            return "off"
 
 
 class Tag(object):
