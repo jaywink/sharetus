@@ -236,7 +236,7 @@ sharer = Sharer(share_url, share_title)
 
 # get tags from tracker    
 connection = QtSparql.QSparqlConnection("QTRACKER")    
-query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag}")
+query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag} order by nao:prefLabel(?d)")
 result = connection.exec_(query)
 result.waitForFinished()
 
