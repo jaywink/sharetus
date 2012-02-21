@@ -39,19 +39,14 @@ Page {
         width: parent.width
         height: parent.height
 
-        HeaderLabel {
-            id: headerLabel
-        }
-
         URLInfo {
             id: labelContainer
-            anchors.top: headerLabel.bottom
         }
 
         List {
             id: listPage
             width: page.width
-            height: page.height - labelContainer.implicitHeight - headerLabel.height
+            height: page.height - labelContainer.implicitHeight
             anchors.top: labelContainer.bottom
         }
     }

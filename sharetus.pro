@@ -18,7 +18,6 @@ OTHER_FILES += \
 	qtc_packaging/debian_harmattan/changelog \
 	qml/main.qml \
 	qml/MainPage.qml \
-        qml/HeaderLabel.qml  \
 	sharetus.py \
         sharetus.png \
     qml/List.qml \
@@ -39,7 +38,7 @@ CONFIG += mdatauri shareui share-ui-plugin share-ui-common qt debug plugin link_
 
 target.path = /usr/lib/share-ui/plugins
 
-qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/HeaderLabel.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml
+qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml
 qml.path = /opt/sharetus/qml
 
 python.files = sharetus.py
