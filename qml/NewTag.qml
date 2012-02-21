@@ -148,6 +148,7 @@ Page {
                 } else {
                     controller.save_tags(newTagNameInput.text, 'false');
                 }
+                newTagNameInput.text = ""
                 pageStack.pop();
             }
         }
