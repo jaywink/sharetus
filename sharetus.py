@@ -89,7 +89,7 @@ class Sharer(QtCore.QObject):
         return self.share_url
         
     def get_share_title(self):
-        return self.share_title
+        return self.share_title.decode(sys.getfilesystemencoding())
         
     on_get = QtCore.Signal()
     share_url_str = QtCore.Property(str, get_share_url, notify=on_get)
