@@ -151,17 +151,6 @@ class TagListModel(QtCore.QAbstractListModel):
             return self._tags[index.row()]
         return None
         
-    #def insertRows(self, count, parent, tags):
-        #self.beginInsertRows(QtCore.QModelIndex(), row, row+count-1);
-        #for tag in tags:
-            #self._tags.append(
-        #for (int row = 0; row < rows; ++row) {
-         #stringList.insert(position, "");
-     #}
-#
-     #endInsertRows();
-     #return true;
-        
     def addItem(self, tag):
         self.beginInsertRows(QtCore.QModelIndex(), len(self._tags), len(self._tags)+1)
         self._tags.append(TagWrapper(Tag(tag)))
@@ -199,12 +188,8 @@ class TagController(QtCore.QObject):
     @QtCore.Slot(str, result=str)
     def tagStatus(self, tag):
         if tag in sharer.tags:
-            #print "tag",tag,"is on"
-            #log.write("tag "+tag+" is on")
             return "on"
         else:
-            #print "tag",tag,"is off"
-            #log.write("tag "+tag+" is off")
             return "off"
 
 
