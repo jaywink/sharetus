@@ -65,7 +65,7 @@ public Q_SLOTS:
 private:
 
     /*!
-      \brief If given content is Ok for command line sharing
+      \brief If given content is Ok for sharing
       \return true if content is accepted, false if not
      */
     bool acceptContent (const ShareUI::ItemContainer * items);

@@ -38,7 +38,7 @@ QString SharetusMethod::title () {
 
 QString SharetusMethod::icon () {
     //return QString::fromLatin1 ("sharetus");
-    return QString::fromLatin1 ("");
+    return QString::fromLatin1 ("icon-m-toolbar-share");
 }
 
 QString SharetusMethod::id () {
