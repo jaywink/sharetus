@@ -1,3 +1,11 @@
+sharetus (0.4.0) unstable; urgency=low
+  * Fixed issue with non-ascii characters in title label
+  * Removed HeaderLabel since application name is not really needed in the UI
+  * Added a page for adding new tags with optional saving to Tracker DB
+  * Added About page with links for contacting author and GitHub homepage
+
+ -- Jason Robinson <jaywink@basshero.org>  Sat, 25 Feb 2012 23:29:00 +0200
+
 sharetus (0.3.0) unstable; urgency=low
   * Tag page for selecting tags from Tracker DB, which is also used
     by device gallery. New tags cannot be added yet in this version.
