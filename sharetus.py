@@ -38,6 +38,8 @@ class Sharer(QtCore.QObject):
     share_title = ""
     tags = []
     
+    version = "0.4.0"
+    
     params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
     target_url = {  "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",
                     "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
@@ -120,6 +122,14 @@ class Sharer(QtCore.QObject):
             self.tags.remove(tag)
         else:
             self.tags.append(tag)
+            
+    @QtCore.Slot()
+    def contact(self):
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl("mailto:jaywink@basshero.org?subject=Feedback: Sharetus, version "+self.version));
+
+    @QtCore.Slot()
+    def homepage(self):
+        QtGui.QDesktopServices.openUrl("https://github.com/jaywink/sharetus");
     
     
 class TagWrapper(QtCore.QObject):

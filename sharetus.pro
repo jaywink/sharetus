@@ -1,8 +1,4 @@
 
-#contains(MEEGO_EDITION,harmattan) {
-#    target.path = /opt/share-plugin-diaspora/bin
-#    INSTALLS += target
-#}
 
 TARGET = sharetus
 
@@ -24,7 +20,8 @@ OTHER_FILES += \
     qml/URLInfo.qml \
     qml/TagChooser.qml \
     qml/ListItem.qml \
-    qml/NewTag.qml
+    qml/NewTag.qml \
+    qml/About.qml
 
 SOURCES += \
     sharetusmethod.cpp sharetusplugin.cpp
@@ -34,11 +31,9 @@ HEADERS += \
 
 CONFIG += mdatauri shareui share-ui-plugin share-ui-common qt debug plugin link_pkgconfig
 
-#QMAKE_CXXFLAGS += -Werror
-
 target.path = /usr/lib/share-ui/plugins
 
-qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml
+qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml qml/About.qml
 qml.path = /opt/sharetus/qml
 
 python.files = sharetus.py

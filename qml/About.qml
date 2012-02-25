@@ -21,34 +21,36 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
+
 Page {
-    id: page
+    id: aboutPage
 
     tools: ToolBarLayout {
         visible: true
-        ToolButton { text: "Tags"; anchors.centerIn: parent; onClicked: pageStack.push(tagPage)  }
-        ToolItem { iconId: "toolbar-view-menu"; onClicked: pageStack.push(aboutPage); }
-
+        ToolItem { iconId: "icon-m-toolbar-back"; onClicked: pageStack.pop(); }
+        ToolButton { text: "Contact"; onClicked: sharer.contact();  }
+        ToolButton { text: "Homepage"; onClicked: sharer.homepage();  }
     }
-
-    property variant share_url: sharer.share_url_str
-    property variant share_title: sharer.share_title_str
 
     Rectangle {
-        id: canvas
+        width: aboutPage.width
+        height: aboutPage.height
+
         color: "black"
-        width: parent.width
-        height: parent.height
 
-        URLInfo {
-            id: labelContainer
+        Label {
+            id: aboutLabel
+            width: parent.width
+            text: '<center><b>S H A R E T U S</b><br><br>Version: 0.4.0<br><br>Author: Jason Robinson (http://basshero.org)<br><br>Please contact author regarding bugs, sharing target and feature requests.</center>'
+            color: "white"
+            anchors.verticalCenter: parent.verticalCenter
+            font {
+                family: "Nokia Pure Text"
+                pixelSize: 24
+            }
+
         }
 
-        List {
-            id: listPage
-            width: page.width
-            height: page.height - labelContainer.implicitHeight
-            anchors.top: labelContainer.bottom
-        }
-    }
+   }
+
 }

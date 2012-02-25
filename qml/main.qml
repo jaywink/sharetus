@@ -40,6 +40,11 @@ PageStackWindow {
             id: tagNewPage
 
         }
+
+        About {
+            id: aboutPage
+
+        }
     }
 
 }
