@@ -55,6 +55,7 @@ class Sharer(QtCore.QObject):
                  }                      
                  
     title_styles = {'diaspora'  : ['markdown_bold']}
+    url_styles = {'diaspora'    : ['markdown']}
     
     def __init__(self, share_url, share_title):
         QtCore.QObject.__init__(self)
@@ -78,7 +79,13 @@ class Sharer(QtCore.QObject):
         return title
     
     def process_url(self, service):
-        return self.share_url
+        url = self.share_url
+        if service in self.url_styles.keys():
+            styles = self.url_styles[service]
+            for style in styles:
+                if style == 'markdown':
+                    url = '[link]('+url+')'
+        return url
 
     def process_notes(self, service):
         notes = ''
