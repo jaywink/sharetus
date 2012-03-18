@@ -5,23 +5,25 @@ TARGET = sharetus
 TEMPLATE     = lib
 
 OTHER_FILES += \
-	qtc_packaging/debian_harmattan/rules \
-	qtc_packaging/debian_harmattan/README \
-	qtc_packaging/debian_harmattan/manifest.aegis \
-	qtc_packaging/debian_harmattan/copyright \
-	qtc_packaging/debian_harmattan/control \
-	qtc_packaging/debian_harmattan/compat \
-	qtc_packaging/debian_harmattan/changelog \
-	qml/main.qml \
-	qml/MainPage.qml \
-	sharetus.py \
-        sharetus.png \
+    qtc_packaging/debian_harmattan/rules \
+    qtc_packaging/debian_harmattan/README \
+    qtc_packaging/debian_harmattan/manifest.aegis \
+    qtc_packaging/debian_harmattan/copyright \
+    qtc_packaging/debian_harmattan/control \
+    qtc_packaging/debian_harmattan/compat \
+    qtc_packaging/debian_harmattan/changelog \
+    qml/main.qml \
+    qml/MainPage.qml \
+    sharetus.py \
+    sharetus.png \
     qml/List.qml \
     qml/URLInfo.qml \
     qml/TagChooser.qml \
     qml/ListItem.qml \
     qml/NewTag.qml \
-    qml/About.qml
+    qml/About.qml \
+    sharetus.desktop \
+    sharetus_settings.xml
 
 SOURCES += \
     sharetusmethod.cpp sharetusplugin.cpp
@@ -42,5 +44,11 @@ python.path = /opt/sharetus
 img.files = sharetus.png
 img.path = /usr/share/icons/hicolor/64x64/apps
 
-INSTALLS += target qml python img
+settingsdesktop.path = /usr/lib/duicontrolpanel
+settingsdesktop.files = sharetus.desktop
+
+settingsxml.path = /usr/share/duicontrolpanel/uidescriptions
+settingsxml.files = sharetus_settings.xml
+
+INSTALLS += target qml python img settingsdesktop settingsxml
 

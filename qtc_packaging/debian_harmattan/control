@@ -2,14 +2,14 @@ Source: sharetus
 Section: user/other
 Priority: optional
 Maintainer: Jason Robinson <jaywink@basshero.org>
-Build-Depends: python (>= 2.6), debhelper (>= 5), libqt4-dev
+Build-Depends: python (>= 2.6), debhelper (>= 5), libqt4-dev, libgq-gconf-dev
 Standards-Version: 3.7.3
 X-Python-Version: 2.6
 Homepage: http://basshero.org
 
 Package: sharetus
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python-pyside.qtgui, python-pyside.qtopengl, python-pyside.qtdeclarative, python-qtsparql
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-pyside.qtgui, python-pyside.qtopengl, python-pyside.qtdeclarative, python-qtsparql, python-gconf
 Description: Share an url to many social network services.
  Sharetus is an application to share urls to many different social
  networking or bookmarking sites.

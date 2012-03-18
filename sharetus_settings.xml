@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<settings>
+<group title="Diaspora*">  
+  <text key="/apps/ControlPanel/Sharetus/diaspora_pod" title="Diaspora* pod URL">
+  </text>
+</group>
+</settings>

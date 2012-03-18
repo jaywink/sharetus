@@ -28,6 +28,7 @@ from PySide import QtCore
 from PySide import QtGui
 from PySide import QtDeclarative
 import QtSparql
+import gconf
 import urllib
 import re
 import sys
@@ -41,7 +42,7 @@ class Sharer(QtCore.QObject):
     version = "0.4.0"
     
     params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
-    target_url = {  "diaspora" : "http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",
+    target_url = {  "diaspora" : "{{pod}}/bookmarklet?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",
                     "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
                     "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}+{{tags}}",
                     "gplus"    : "https://m.google.com/app/plus/x/?content={{url}}+-+{{title}}+{{tags}}&v=compose&hideloc=1",
@@ -66,6 +67,12 @@ class Sharer(QtCore.QObject):
     def share(self, service):
         #page = urllib.urlopen(self.share_url.replace(' ','+')).read()
         #soup = BeautifulSoup(page)
+        if service == 'diaspora':
+            try:
+                pod_url = gconf.client_get_default().get_string("/apps/ControlPanel/Sharetus/diaspora_pod")
+                self.target_url[service] = self.target_url[service].replace('{{pod}}', pod_url)
+            except:
+                self.target_url[service] = 'http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
         share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
         QtGui.QDesktopServices.openUrl(share_url)
 
