@@ -144,7 +144,24 @@ class Sharer(QtCore.QObject):
     @QtCore.Slot()
     def homepage(self):
         QtGui.QDesktopServices.openUrl("https://github.com/jaywink/sharetus");
-    
+        
+    @QtCore.Slot(result=str)    
+    def get_diaspora_pod(self):
+        try:
+            return gconf.client_get_default().get_string("/apps/ControlPanel/Sharetus/diaspora_pod")
+        except:
+            log.write("Couldn't get pod info\n")
+            return ""
+            
+    @QtCore.Slot(str, result=int)    
+    def save_diaspora_pod(self, pod_url):
+        try:
+            client = gconf.client_get_default()
+            client.set_string('/apps/ControlPanel/Sharetus/diaspora_pod', pod_url)
+            return 0
+        except:
+            log.write("Couldn't set pod url\n")
+            return 1
     
 class TagWrapper(QtCore.QObject):
     def __init__(self, tag):

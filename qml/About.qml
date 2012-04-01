@@ -140,12 +140,12 @@ Page {
                     id: diasporaPodUrlInput
                     font {
                         family: "Nokia Pure Text"
-                        pixelSize: 36
+                        pixelSize: 24
                     }
                     color: "black"
-                    maximumLength: 50
+                    maximumLength: 100
                     anchors.fill: parent
-                    anchors.topMargin: 15
+                    anchors.topMargin: 12
                     anchors.leftMargin: 20
                     focus: true
                     validator: RegExpValidator{regExp: /[a-zA-Z0-9\-\.\:\/]*/}
@@ -154,6 +154,13 @@ Page {
                         diasporaPodUrlInput.closeSoftwareInputPanel()
                         dummy.focus = true
                     }
+
+                    function getDiasporaPod() {
+                        var diasporaPod = sharer.get_diaspora_pod();
+                        diasporaPodUrlInput.text = diasporaPod;
+                    }
+
+                    Component.onCompleted: getDiasporaPod();
                 }
 
             }
@@ -177,21 +184,49 @@ Page {
                 onClicked: {
                     diasporaPodUrlInput.closeSoftwareInputPanel();
                     dummy.focus = true;
-                    // save tag
-//                    if (newTagTrackerCheck.checked) {
-//                        controller.save_tags(newTagNameInput.text, 'true');
-//                    } else {
-//                        controller.save_tags(newTagNameInput.text, 'false');
-//                    }
-//                    pageStack.pop();
+                    // save pod url
+                    var result = sharer.save_diaspora_pod(diasporaPodUrlInput.text);
+                    if (result == 0) {
+                        savedNotifyText.text = "Saved";
+                    } else {
+                        savedNotifyText.text = "Failed to save pod url!";
+                    }
+                    savedNotify.visible = true;
+                    savedNotifyTimer.running = true;
                 }
             }
-
-
-
-
         }
 
+        Rectangle {
+            id: savedNotify
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width * 0.8;
+            height: 36;
+            color: "white"
+            visible: false
+            border.color: "green"; border.width: 4
+            radius: 3
+
+            Text {
+                id: savedNotifyText
+                font {
+                    family: "Nokia Pure Text"
+                    pixelSize: 24
+                }
+                anchors.fill: parent
+                color: "black"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            Timer {
+                id: savedNotifyTimer
+                interval: 1000; running: false; repeat: false
+                onTriggered: savedNotify.visible = false;
+             }
+
+        }
 
     // This is just a dummy invisible item that takes the focus when virtual keyboard is closed
     // Tnx: http://meegoharmattandev.blogspot.com/2012/01/closing-virtual-keyboard-when-pressing.html
