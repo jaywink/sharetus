@@ -21,9 +21,7 @@ OTHER_FILES += \
     qml/TagChooser.qml \
     qml/ListItem.qml \
     qml/NewTag.qml \
-    qml/About.qml \
-    sharetus.desktop \
-    sharetus_settings.xml
+    qml/About.qml
 
 SOURCES += \
     sharetusmethod.cpp sharetusplugin.cpp
@@ -44,11 +42,5 @@ python.path = /opt/sharetus
 img.files = sharetus.png
 img.path = /usr/share/icons/hicolor/64x64/apps
 
-settingsdesktop.path = /usr/lib/duicontrolpanel
-settingsdesktop.files = sharetus.desktop
-
-settingsxml.path = /usr/share/duicontrolpanel/uidescriptions
-settingsxml.files = sharetus_settings.xml
-
-INSTALLS += target qml python img settingsdesktop settingsxml
+INSTALLS += target qml python img
 
