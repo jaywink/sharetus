@@ -43,7 +43,8 @@ class Sharer(QtCore.QObject):
     
     params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
     target_url = {  "diaspora" : "{{pod}}/bookmarklet?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",
-                    "facebook" : "https://www.facebook.com/sharer/sharer.php?u={{url}}&t={{title}}",
+                    "facebook" : "https://www.facebook.com/sharer/sharer.php?m2w&u={{url}}&t={{title}}",
+                        # note facebook forced to desktop view as it has better privacy and image controls
                     "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}+{{tags}}",
                     "gplus"    : "https://plus.google.com/share?url={{url}}",
                     "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
