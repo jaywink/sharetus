@@ -260,21 +260,23 @@ context = view.rootContext()
 # init sharer
 sharer = Sharer(share_url, share_title)
 
-# get tags from tracker    
-connection = QtSparql.QSparqlConnection("QTRACKER")    
-query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag} order by nao:prefLabel(?d)")
-result = connection.exec_(query)
-result.waitForFinished()
-
-if result.hasError():
-    log.write("Executing query failed")
-    
-tag_list = []
-log.write(str(result.size()))
-while result.next():
-    if len(result.binding(0).value()) > 0:
-        log.write(result.binding(0).value())
-        tag_list.append(Tag(result.binding(0).value()))
+# get tags from tracker  
+tag_list = []  
+try:
+    connection = QtSparql.QSparqlConnection("QTRACKER")    
+    query = QtSparql.QSparqlQuery("select nao:prefLabel(?d) where { ?d a nao:Tag} order by nao:prefLabel(?d)")
+    result = connection.exec_(query)
+    result.waitForFinished()
+    if result.hasError():
+        log.write("Executing query failed")
+    else:
+        log.write(str(result.size()))
+    while result.next():
+        if len(result.binding(0).value()) > 0:
+            log.write(result.binding(0).value())
+            tag_list.append(Tag(result.binding(0).value()))
+except:
+    log.write("Error! Could not get tags from tracker")
 
 # debug
 #tag_list = tag_list + [Tag('debug1'), Tag('debug2')]
