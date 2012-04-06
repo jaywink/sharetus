@@ -49,12 +49,13 @@ class Sharer(QtCore.QObject):
                     "gplus"    : "https://plus.google.com/share?url={{url}}",
                     "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
                     "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes={{text}}",
-                    "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=",
+                    "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=http://www.stumbleupon.com/submit?url=[URL]&title=[TITLE]",
                     "gtranslate":"http://translate.google.com/translate?u={{url}}&sl=auto",
                     "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
                     "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
                     "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}+{{tags}}",
-                    "digg"     : "http://www.digg.com/submit?phase=2&url={{url}}&title={{title}}"
+                    "digg"     : "http://www.digg.com/submit?phase=2&url={{url}}&title={{title}}",
+                    "stumble"  : "http://www.stumbleupon.com/submit?url={{url}}&title={{title}}"
                  }                      
                  
     title_styles = {'diaspora'  : ['markdown_bold']}
