@@ -67,24 +67,29 @@ import QtMobility.feedback 1.1
                  index: 6
              }
              ListElement {
+                 title: "Digg"
+                 identifier: "digg"
+                 index: 7
+             }
+             ListElement {
                  title: "Ping FM"
                  identifier: "pingfm"
-                 index: 7
+                 index: 8
              }
              ListElement {
                  title: "Delicious"
                  identifier: "delicious"
-                 index: 8
+                 index: 9
              }
              ListElement {
                  title: "Google Bookmarks"
                  identifier: "gbookmarks"
-                 index: 9
+                 index: 10
              }
              ListElement {
                  title: "Google Translate"
                  identifier: "gtranslate"
-                 index: 10
+                 index: 11
              }
 
          }

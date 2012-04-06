@@ -52,7 +52,8 @@ class Sharer(QtCore.QObject):
                     "gtranslate":"http://translate.google.com/translate?u={{url}}&sl=auto",
                     "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
                     "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
-                    "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}+{{tags}}"
+                    "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}+{{tags}}",
+                    "digg"     : "http://www.digg.com/submit?phase=2&url={{url}}&title={{title}}"
                  }                      
                  
     title_styles = {'diaspora'  : ['markdown_bold']}
