@@ -66,7 +66,7 @@ Page {
                 Label {
                     id: aboutLabel
                     width: parent.width
-                    text: '<b>S H A R E T U S</b><br><br>Version: 0.4.0<br><br>Author: Jason Robinson (http://basshero.org)<br><br>Please contact author regarding bugs, sharing target and feature requests.'
+                    text: '<b>S H A R E T U S</b><br><br>Version: 0.5.0<br><br>Author: Jason Robinson (http://basshero.org)<br><br>Please contact author regarding bugs, sharing target and feature requests.'
                     color: "white"
                     anchors.top: aboutTitle.bottom
                     anchors.topMargin: 20

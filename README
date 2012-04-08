@@ -14,8 +14,19 @@ and bookmarking sites, including:
   * Delicious
   * Google Bookmarks
   * Google Translate
+  * Digg
+  * StumbleUpon
 
 See Github for details: https://github.com/jaywink/sharetus
+
+TODO:
+ - Add settings removal on package remove/purge
+ - Add image support for Diaspora*
+ - Add post excerpt for supported targets
+ - Retrieve tags after app load to decrease startup time
+ - Enable on/off setting for all targets
+ - Add possibility to add custom targets
+ - Fix issue with application image
 
 Contributions from elsewhere:
  - Python classes TagWrapper, TagListModel, TagController

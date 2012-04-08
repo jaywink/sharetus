@@ -1,3 +1,15 @@
+sharetus (0.5.0) unstable; urgency=low
+  * Added Settings section to About page
+  * Added StumbleUpon as target
+  * Added Digg as a target
+  * Facebook sharing is now forced to desktop version as it allows better control for
+    images and privacy options
+  * Fixed Google+ share link
+  * Diaspora* sharing is now done directly to pod set by user in settings page
+  * When sharing to Diaspora*, URL is now "link" text using Markdown
+
+ -- Jason Robinson <jaywink@basshero.org>  Sun, 08 Apr 2012 19:50:09 +0300
+
 sharetus (0.4.0) unstable; urgency=low
   * Fixed issue with non-ascii characters in title label
   * Removed HeaderLabel since application name is not really needed in the UI
