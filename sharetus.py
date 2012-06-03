@@ -73,6 +73,8 @@ class Sharer(QtCore.QObject):
         if service == 'diaspora':
             try:
                 pod_url = gconf.client_get_default().get_string("/apps/ControlPanel/Sharetus/diaspora_pod")
+                if pod_url == None or len(pod_url) == 0:
+					raise Exception()
                 self.target_url[service] = self.target_url[service].replace('{{pod}}', pod_url)
             except:
                 self.target_url[service] = 'http://sharetodiaspora.github.com/?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
@@ -161,6 +163,7 @@ class Sharer(QtCore.QObject):
         try:
             client = gconf.client_get_default()
             client.set_string('/apps/ControlPanel/Sharetus/diaspora_pod', pod_url)
+            client.suggest_sync()
             return 0
         except:
             log.write("Couldn't set pod url\n")
