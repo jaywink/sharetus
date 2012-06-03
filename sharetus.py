@@ -75,7 +75,7 @@ class Sharer(QtCore.QObject):
                 pod_url = gconf.client_get_default().get_string("/apps/ControlPanel/Sharetus/diaspora_pod")
                 self.target_url[service] = self.target_url[service].replace('{{pod}}', pod_url)
             except:
-                self.target_url[service] = 'http://iliketoast.net/dshare.html?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
+                self.target_url[service] = 'http://sharetodiaspora.github.com/?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
         share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
         QtGui.QDesktopServices.openUrl(share_url)
 
