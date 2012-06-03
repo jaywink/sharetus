@@ -247,7 +247,6 @@ class Tag(object):
     def __str__(self):
         return self.name
 
-
 # INIT APP
 
 log = open('/tmp/sharetus.debug', 'w')
@@ -262,6 +261,25 @@ except:
 app = QtGui.QApplication(sys.argv)
 view = QtDeclarative.QDeclarativeView()
 context = view.rootContext()
+
+# init Gconf values watching
+keys = {}
+def key_changed_callback (client, cnxn_id, entry, key):
+	if not entry.value:
+		print key, entry
+		#TODO: delete key
+	else:
+		if entry.value.type == gconf.VALUE_STRING:
+			print key, entry
+			#label.set_text (entry.value.to_string ())
+		else:
+			print key, '<wrong type>'
+			#TODO: delete key
+			#label.set ('<wrong type>')
+
+client = gconf.client_get_default ()
+client.add_dir ('/apps/ControlPanel/Sharetus', gconf.CLIENT_PRELOAD_NONE)
+client.notify_add ('/apps/ControlPanel/Sharetus/diaspora_pod', key_changed_callback, "diaspora_pod")
 
 # init sharer
 sharer = Sharer(share_url, share_title)
