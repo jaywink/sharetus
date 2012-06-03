@@ -39,7 +39,7 @@ class Sharer(QtCore.QObject):
     share_title = ""
     tags = []
     
-    version = "0.5.0"
+    version = "0.5.1"
     
     params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
     target_url = {  "diaspora" : "{{pod}}/bookmarklet?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",

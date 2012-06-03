@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "remove" = $1 ] || [ "purge" = $1 ]; then
+	/usr/bin/aegis-exec -s -u user /usr/bin/gconftool --recursive-unset /apps/ControlPanel/Sharetus
+fi
+exit 0
+
