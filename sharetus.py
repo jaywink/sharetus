@@ -30,33 +30,23 @@ from PySide import QtDeclarative
 import QtSparql
 import gconf
 import urllib
+import json
 import re
 import sys
- 
+
+class Settings:	
+	def __init__(self):
+		app_file = open('/opt/sharetus/sharetus.json')
+		app = json.load(settings_file)
+		app_file.close()
+		self.app = app
+
 class Sharer(QtCore.QObject):
-    
     share_url = ""
     share_title = ""
     tags = []
     
-    version = "0.5.1"
-    
     params_to_clean = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
-    target_url = {  "diaspora" : "{{pod}}/bookmarklet?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",
-                    "facebook" : "https://www.facebook.com/sharer/sharer.php?m2w&u={{url}}&t={{title}}",
-                        # note facebook forced to desktop view as it has better privacy and image controls
-                    "twitter"  : "https://twitter.com/intent/tweet?url={{url}}&text={{title}}+{{tags}}",
-                    "gplus"    : "https://plus.google.com/share?url={{url}}",
-                    "gbookmarks":"https://www.google.com/bookmarks/mark?op=edit&bkmk={{url}}&title={{title}}&annotation=",
-                    "delicious": "http://delicious.com/save?url={{url}}&title={{title}}&notes={{text}}",
-                    "linkedin" : "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary=http://www.stumbleupon.com/submit?url=[URL]&title=[TITLE]",
-                    "gtranslate":"http://translate.google.com/translate?u={{url}}&sl=auto",
-                    "tumblr"   : "http://www.tumblr.com/share?v=3&u={{url}}&s=",
-                    "dzone"    : "http://www.dzone.com/links/add.html?url={{url}}&title={{title}}",
-                    "pingfm"   : "http://ping.fm/ref/?link={{url}}&title={{title}}+{{tags}}",
-                    "digg"     : "http://www.digg.com/submit?phase=2&url={{url}}&title={{title}}",
-                    "stumble"  : "http://www.stumbleupon.com/submit?url={{url}}&title={{title}}"
-                 }                      
                  
     title_styles = {'diaspora'  : ['markdown_bold']}
     url_styles = {'diaspora'    : ['markdown']}
@@ -75,10 +65,10 @@ class Sharer(QtCore.QObject):
                 pod_url = gconf.client_get_default().get_string("/apps/ControlPanel/Sharetus/diaspora_pod")
                 if pod_url == None or len(pod_url) == 0:
 					raise Exception()
-                self.target_url[service] = self.target_url[service].replace('{{pod}}', pod_url)
+                settings['targets'][service]['url'] = settings['targets'][service]['url'].replace('{{pod}}', pod_url)
             except:
-                self.target_url[service] = 'http://sharetodiaspora.github.com/?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
-        share_url = self.target_url[service].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
+                settings['targets'][service]['url'] = 'http://sharetodiaspora.github.com/?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
+        share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
         QtGui.QDesktopServices.openUrl(share_url)
 
     def process_title(self, service):
@@ -144,7 +134,7 @@ class Sharer(QtCore.QObject):
             
     @QtCore.Slot()
     def contact(self):
-        QtGui.QDesktopServices.openUrl(QtCore.QUrl("mailto:jaywink@basshero.org?subject=Feedback: Sharetus, version "+self.version));
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl("mailto:jaywink@basshero.org?subject=Feedback: Sharetus, version "+settings['version']));
 
     @QtCore.Slot()
     def homepage(self):
@@ -251,6 +241,9 @@ class Tag(object):
 
 log = open('/tmp/sharetus.debug', 'w')
 
+global settings
+settings = Settings()
+
 try:
     share_url = sys.argv[1].replace("'","")
     share_title = sys.argv[2].replace("'","")
@@ -261,25 +254,6 @@ except:
 app = QtGui.QApplication(sys.argv)
 view = QtDeclarative.QDeclarativeView()
 context = view.rootContext()
-
-# init Gconf values watching
-keys = {}
-def key_changed_callback (client, cnxn_id, entry, key):
-	if not entry.value:
-		print key, entry
-		#TODO: delete key
-	else:
-		if entry.value.type == gconf.VALUE_STRING:
-			print key, entry
-			#label.set_text (entry.value.to_string ())
-		else:
-			print key, '<wrong type>'
-			#TODO: delete key
-			#label.set ('<wrong type>')
-
-client = gconf.client_get_default ()
-client.add_dir ('/apps/ControlPanel/Sharetus', gconf.CLIENT_PRELOAD_NONE)
-client.notify_add ('/apps/ControlPanel/Sharetus/diaspora_pod', key_changed_callback, "diaspora_pod")
 
 # init sharer
 sharer = Sharer(share_url, share_title)
