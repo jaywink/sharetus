@@ -103,9 +103,13 @@ class Sharer(QtCore.QObject):
     def get_share_title(self):
         return self.share_title.decode(sys.getfilesystemencoding())
         
+    def get_version(self):
+        return settings['version']
+        
     on_get = QtCore.Signal()
     share_url_str = QtCore.Property(str, get_share_url, notify=on_get)
     share_title_str = QtCore.Property(str, get_share_title, notify=on_get)
+    version_str = QtCore.Property(str, get_version)
     
     def clean_url(self, url):
         # cleans url of unnecessary parameters
@@ -159,6 +163,10 @@ class Sharer(QtCore.QObject):
         except:
             log.write("Couldn't set pod url\n")
             return 1
+            
+	#@QtCore.Slot(result=str)    
+	#def get_version(self):
+		#return settings['version']
     
 class TagWrapper(QtCore.QObject):
     def __init__(self, tag):
