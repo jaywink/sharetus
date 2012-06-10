@@ -34,12 +34,13 @@ import json
 import re
 import sys
 
-class Settings:	
-	def __init__(self):
-		app_file = open('/opt/sharetus/sharetus.json')
-		app = json.load(settings_file)
-		app_file.close()
-		self.app = app
+class Settings(dict):	
+	def __init__(self, file_name):
+		file_object = open(file_name)
+		data = json.load(file_object)
+		file_object.close()
+		for i in range(len(data)):
+			self[data.keys()[i]] = data[data.keys()[i]]
 
 class Sharer(QtCore.QObject):
     share_url = ""
@@ -242,7 +243,7 @@ class Tag(object):
 log = open('/tmp/sharetus.debug', 'w')
 
 global settings
-settings = Settings()
+settings = Settings('/opt/sharetus/sharetus.json')
 
 try:
     share_url = sys.argv[1].replace("'","")

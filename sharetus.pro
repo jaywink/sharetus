@@ -16,6 +16,7 @@ OTHER_FILES += \
     qml/main.qml \
     qml/MainPage.qml \
     sharetus.py \
+    sharetus.json \
     sharetus.png \
     qml/List.qml \
     qml/URLInfo.qml \
@@ -37,7 +38,7 @@ target.path = /usr/lib/share-ui/plugins
 qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml qml/About.qml
 qml.path = /opt/sharetus/qml
 
-python.files = sharetus.py
+python.files = sharetus.py sharetus.json
 python.path = /opt/sharetus
 
 img.files = sharetus.png
