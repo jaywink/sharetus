@@ -15,8 +15,8 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/postrm \
     qml/main.qml \
     qml/MainPage.qml \
-    sharetus.py \
-    tags.py \
+    src/sharetus.py \
+    src/tags.py \
     sharetus.json \
     sharetus.png \
     qml/List.qml \
@@ -27,10 +27,10 @@ OTHER_FILES += \
     qml/About.qml
 
 SOURCES += \
-    sharetusmethod.cpp sharetusplugin.cpp
+    src/sharetusmethod.cpp src/sharetusplugin.cpp
 
 HEADERS += \
-    sharetusmethod.h sharetusplugin.h
+    src/sharetusmethod.h src/sharetusplugin.h
 
 CONFIG += mdatauri shareui share-ui-plugin share-ui-common qt debug plugin link_pkgconfig
 
@@ -39,11 +39,14 @@ target.path = /usr/lib/share-ui/plugins
 qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml qml/About.qml
 qml.path = /opt/sharetus/qml
 
-python.files = sharetus.py sharetus.json tags.py
-python.path = /opt/sharetus
+python.files = src/sharetus.py src/tags.py
+python.path = /opt/sharetus/src
 
 img.files = sharetus.png
 img.path = /usr/share/icons/hicolor/64x64/apps
 
-INSTALLS += target qml python img
+data.files = sharetus.json
+data.path = /opt/sharetus
+
+INSTALLS += target qml python img data
 
