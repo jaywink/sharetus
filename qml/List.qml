@@ -29,115 +29,46 @@ import QtMobility.feedback 1.1
         color: "black"
         clip: true
 
-        ListModel {
-             id: listModel
-             ListElement {
-                 title: "Diaspora*"
-                 identifier: "diaspora"
-                 index: 0
-             }
-             ListElement {
-                 title: "Facebook"
-                 identifier: "facebook"
-                 index: 1
-             }
-             ListElement {
-                 title: "Twitter"
-                 identifier: "twitter"
-                 index: 2
-             }
-             ListElement {
-                 title: "Google+"
-                 identifier: "gplus"
-                 index: 3
-             }
-             ListElement {
-                 title: "LinkedIn"
-                 identifier: "linkedin"
-                 index: 4
-             }
-             ListElement {
-                 title: "Tumblr"
-                 identifier: "tumblr"
-                 index: 5
-             }
-             ListElement {
-                 title: "DZone"
-                 identifier: "dzone"
-                 index: 6
-             }
-             ListElement {
-                 title: "Digg"
-                 identifier: "digg"
-                 index: 7
-             }
-             ListElement {
-                 title: "StumbleUpon"
-                 identifier: "stumble"
-                 index: 8
-             }
-             ListElement {
-                 title: "Ping FM"
-                 identifier: "pingfm"
-                 index: 9
-             }
-             ListElement {
-                 title: "Delicious"
-                 identifier: "delicious"
-                 index: 10
-             }
-             ListElement {
-                 title: "Google Bookmarks"
-                 identifier: "gbookmarks"
-                 index: 11
-             }
-             ListElement {
-                 title: "Google Translate"
-                 identifier: "gtranslate"
-                 index: 12
-             }
-         }
-
         ListView {
-             id: listView
+             id: listModel
+             model: targetListModel
+             anchors.horizontalCenter: parent
              anchors.fill: parent
-             model: listModel
 
-             delegate:  Item {
-                 id: listItem
-                 height: 80
-                 width: parent.width
-
+             delegate: Component {
                  Rectangle {
-                     anchors.centerIn: parent.Center
-                     anchors.fill: parent
-                     color: ((model.index % 2 == 0)?"#222":"#111")
+                     id: wrapper
+                     width: listModel.width
+                     height: 80
+                     color: ((index % 2 == 0)?"#222":"#111")
 
                      ListItem {
                          id: mainText
-                         text: model.title
+                         text: model.target.desc
                          color: "white"
+
                      }
-                 }
 
-                 HapticsEffect {
-                      id: rumbleEffect
-                      attackIntensity: 0.0
-                      attackTime: 250
-                      intensity: 1.0
-                      duration: 100
-                      fadeTime: 250
-                      fadeIntensity: 0.0
-                  }
 
-                 MouseArea {
-                     anchors.fill: parent
-                     onClicked: {
-                         rumbleEffect.start();
-                         var result = sharer.share(model.identifier);
-                         notifyText.text = result;
-                         notify.visible = true;
-                         notifyTimer.running = true;
+                     HapticsEffect {
+                          id: rumbleEffect
+                          attackIntensity: 0.0
+                          attackTime: 250
+                          intensity: 1.0
+                          duration: 100
+                          fadeTime: 250
+                          fadeIntensity: 0.0
+                      }
+
+                     MouseArea {
+                         anchors.fill: parent
+                         onClicked: {
+                             rumbleEffect.start();
+                             var result = sharer.share(model.target.name);
+                             notifyText.text = result;
+                             notify.visible = true;
+                             notifyTimer.running = true;
+                         }
                      }
                  }
              }
@@ -177,4 +108,5 @@ import QtMobility.feedback 1.1
          ScrollDecorator {
              flickableItem: listView
          }
-}
+    }
+

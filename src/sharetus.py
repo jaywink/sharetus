@@ -24,6 +24,7 @@
 '''
 
 from tags import *
+from targets import *
 #from BeautifulSoup import BeautifulSoup
 from PySide import QtCore
 from PySide import QtGui
@@ -240,10 +241,28 @@ tags = [TagWrapper(tag) for tag in tag_list]
 tag_model = TagListModel(tags)
 controller = TagController(log, sharer, connection, tag_model)
 
+# get targets from settings
+target_list = []
+try:
+    for i in range(len(settings['targets'])):
+        if preferences['targets'][settings['targets'].keys()[i]]['visible'] == 1:
+            target_list.append(Target(settings['targets'].keys()[i], settings['targets'][settings['targets'].keys()[i]]['name']))
+except:
+    log.write("Error! Problem getting targets!")
+    
+# set target model
+targets = [TargetWrapper(target) for target in target_list]
+target_model = TargetListModel(targets)
+target_controller = TargetController(target_model)
+
 # set contexts
 context.setContextProperty('sharer', sharer)
 context.setContextProperty('controller', controller)
 context.setContextProperty('tagListModel', tag_model)
+context.setContextProperty('targetListModel', target_model)
+context.setContextProperty('targetController', target_controller)
+
+# show app
 view.setSource(QtCore.QUrl('/opt/sharetus/qml/main.qml'))
 view.showFullScreen()
 app.exec_()
