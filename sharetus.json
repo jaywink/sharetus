@@ -20,7 +20,7 @@
 			"comment"	: "annotation can be used for notes when supported"
 		},
 		"delicious" : {
-			"url"		: "http://delicious.com/save?url={{url}}&title={{title}}&notes={{text}}"
+			"url"		: "http://delicious.com/save?url={{url}}&title={{title}}"
 		},
 		"linkedin"  : {
 			"url"		: "http://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}",
@@ -43,6 +43,9 @@
 		},
 		"stumble"	: {
 			"url"		: "http://www.stumbleupon.com/submit?url={{url}}&title={{title}}"
-		}
+		},
+        "clipboard" : {
+            "url"       : "{{title}} - {{url}} - {{tags}}"
+        }
 	}
 }

@@ -58,7 +58,7 @@ class Sharer(QtCore.QObject):
         self.share_url = self.clean_url(share_url)
         self.share_title = share_title
         
-    @QtCore.Slot(str)
+    @QtCore.Slot(str, result=str)
     def share(self, service):
         #page = urllib.urlopen(self.share_url.replace(' ','+')).read()
         #soup = BeautifulSoup(page)
@@ -71,7 +71,13 @@ class Sharer(QtCore.QObject):
             except:
                 settings['targets'][service]['url'] = 'http://sharetodiaspora.github.com/?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
         share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
-        QtGui.QDesktopServices.openUrl(share_url)
+        if service == 'clipboard':
+            clipboard = QtGui.QClipboard()
+            clipboard.setText(share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service))))
+            return "Copied to clipboard"
+        else:
+            QtGui.QDesktopServices.openUrl(share_url)
+            return "Opening window for sharing"
 
     def process_title(self, service):
         title = self.share_title

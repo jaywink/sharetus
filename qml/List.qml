@@ -132,8 +132,45 @@ import QtMobility.feedback 1.1
 
                  MouseArea {
                      anchors.fill: parent
-                     onClicked: { rumbleEffect.start(); sharer.share(model.identifier); }
+                     onClicked: {
+                         rumbleEffect.start();
+                         var result = sharer.share(model.identifier);
+                         notifyText.text = result;
+                         notify.visible = true;
+                         notifyTimer.running = true;
+                     }
                  }
+             }
+
+             Rectangle {
+                 id: notify
+                 anchors.horizontalCenter: parent.horizontalCenter
+                 anchors.verticalCenter: parent.verticalCenter
+                 width: parent.width * 0.8;
+                 height: 36;
+                 color: "white"
+                 visible: false
+                 border.color: "green"; border.width: 4
+                 radius: 3
+
+                 Text {
+                     id: notifyText
+                     font {
+                         family: "Nokia Pure Text"
+                         pixelSize: 24
+                     }
+                     anchors.fill: parent
+                     color: "black"
+                     horizontalAlignment: Text.AlignHCenter
+                     verticalAlignment: Text.AlignVCenter
+                 }
+
+                 Timer {
+                     id: notifyTimer
+                     interval: 1000; running: false; repeat: false
+                     onTriggered: notify.visible = false;
+                  }
+
              }
          }
 
