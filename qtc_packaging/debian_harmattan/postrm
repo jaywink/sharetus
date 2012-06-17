@@ -1,7 +1,14 @@
 #!/bin/sh
 
+# remove gconf settings on remove or purge
 if [ "remove" = $1 ] || [ "purge" = $1 ]; then
 	/usr/bin/aegis-exec -s -u user /usr/bin/gconftool --recursive-unset /apps/ControlPanel/Sharetus
 fi
+#remove home folder settings dir on purge
+if [ "purge" = $1 ]; then
+	rm -rf /home/user/.sharetus/
+fi
 exit 0
+
+
 

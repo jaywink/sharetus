@@ -34,14 +34,34 @@ import urllib
 import json
 import re
 import sys
+import os
 
 class Settings(dict):	
-	def __init__(self, file_name):
-		file_object = open(file_name)
-		data = json.load(file_object)
-		file_object.close()
-		for i in range(len(data)):
-			self[data.keys()[i]] = data[data.keys()[i]]
+    def __init__(self, file_name, template=None):
+        try:
+            file_object = open(file_name)
+        except IOError, e:
+            if template:
+                # create missing file from template
+                # check first that location exists, if not try to create
+                try:
+                    if not os.path.isdir(file_name[:file_name.rfind('/')]):
+                        os.mkdir(file_name[:file_name.rfind('/')])
+                except:
+                    raise IOError("Could not determine or create settings folder "+file_name[:file_name.rfind('/')])
+                template_file = open(template)
+                file_object = open(file_name, 'w')
+                for char in template_file:
+                    file_object.write(char)
+                template_file.close()
+                file_object.close()
+                file_object = open(file_name)
+            else:
+                raise IOError("Settings file "+file_name+" is missing!")
+        data = json.load(file_object)
+        file_object.close()
+        for i in range(len(data)):
+            self[data.keys()[i]] = data[data.keys()[i]]
 
 class Sharer(QtCore.QObject):
     share_url = ""
@@ -177,6 +197,8 @@ log = open('/tmp/sharetus.debug', 'w')
 
 global settings
 settings = Settings('/opt/sharetus/sharetus.json')
+global preferences
+preferences = Settings(os.environ['HOME']+'/.sharetus/preferences.json', '/opt/sharetus/templates/preferences_template.json')
 
 try:
     share_url = sys.argv[1].replace("'","")

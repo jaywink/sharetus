@@ -1,0 +1,64 @@
+{
+	"README" 	    : "THIS FILE IS FOR USER SETTINGS. YOU CAN EDIT IT AS YOU WISH. NOTE HOWEVER THAT ALL TARGETS IN sharetus.json MUST ALSO BE HERE.",
+    "INFO_VISIBLE"  : "Value of 1 means active target, 0 means not active",
+    "INFO_ORDER"    : "Order that targets are listed in UI",
+	"targets" 	: {
+		"diaspora"	: {
+			"pod"		: "",
+            "order"     : 1,
+            "visible"   : 1
+		},
+		"facebook"	: {
+			"order"     : 2,
+            "visible"   : 1
+		},
+		"twitter"	: {
+			"order"     : 3,
+            "visible"   : 1
+		},
+		"gplus"		: {
+			"order"     : 4,
+            "visible"   : 1
+		},
+		"gbookmarks": {
+			"order"     : 9,
+            "visible"   : 1
+		},
+		"delicious" : {
+			"order"     : 10,
+            "visible"   : 1
+		},
+		"linkedin"  : {
+			"order"     : 5,
+            "visible"   : 1
+		},
+		"gtranslate": {
+			"order"     : 13,
+            "visible"   : 1
+		},
+		"tumblr"	: {
+			"order"     : 6,
+            "visible"   : 1
+		},
+		"dzone"		: {
+			"order"     : 7,
+            "visible"   : 1
+		},
+		"pingfm"	: {
+			"order"     : 8,
+            "visible"   : 1
+		},
+		"digg"		: {
+			"order"     : 11,
+            "visible"   : 1
+		},
+		"stumble"	: {
+			"order"     : 12,
+            "visible"   : 1
+		},
+        "clipboard" : {
+            "order"     : 14,
+            "visible"   : 1
+        }
+	}
+}

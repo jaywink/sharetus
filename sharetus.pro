@@ -18,6 +18,7 @@ OTHER_FILES += \
     src/sharetus.py \
     src/tags.py \
     sharetus.json \
+    preferences_template.json \
     sharetus.png \
     qml/List.qml \
     qml/URLInfo.qml \
@@ -48,5 +49,8 @@ img.path = /usr/share/icons/hicolor/64x64/apps
 data.files = sharetus.json
 data.path = /opt/sharetus
 
-INSTALLS += target qml python img data
+template.files = preferences_template.json
+template.path = /opt/sharetus/templates
+
+INSTALLS += target qml python img data template
 
