@@ -93,7 +93,7 @@ class Sharer(QtCore.QObject):
         share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
         if service == 'clipboard':
             clipboard = QtGui.QClipboard()
-            clipboard.setText(share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service))))
+            clipboard.setText(share_url)
             return "Copied to clipboard"
         else:
             QtGui.QDesktopServices.openUrl(share_url)
