@@ -73,26 +73,26 @@ class TagController(QtCore.QObject):
     
     @QtCore.Slot(QtCore.QObject)
     def tagSelected(self, wrapper):
-        log.write('User clicked on:'+ wrapper._tag.name)
+        self.log.write('User clicked on:'+ wrapper._tag.name)
         self.sharer.toggle_tag(wrapper._tag.name)
         
     @QtCore.Slot(str, str)
     def save_tags(self, tags, to_database):
         for tag in tags.split(','):
-            log.write('Adding tag: '+tag)
+            self.log.write('Adding tag: '+tag)
             self.sharer.toggle_tag(tag)
             # add to model
             self.tag_model.addItem(tag)
             # save to database
             if to_database == 'true':
                 query = QtSparql.QSparqlQuery("insert { _:a a nao:Tag ; nao:prefLabel '"+tag+"' . }", QtSparql.QSparqlQuery.InsertStatement)
-                result = connection.exec_(query)
+                result = self.connection.exec_(query)
                 result.waitForFinished()
-                log.write('Tag '+tag+' added to database')
+                self.log.write('Tag '+tag+' added to database')
                 
     @QtCore.Slot(str, result=str)
     def tagStatus(self, tag):
-        if tag in sharer.tags:
+        if tag in self.sharer.tags:
             return "on"
         else:
             return "off"
