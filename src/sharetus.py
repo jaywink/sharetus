@@ -138,7 +138,7 @@ class Sharer(QtCore.QObject):
     on_get = QtCore.Signal()
     share_url_str = QtCore.Property(str, get_share_url, notify=on_get)
     share_title_str = QtCore.Property(str, get_share_title, notify=on_get)
-    version_str = QtCore.Property(str, get_version)
+    version_str = QtCore.Property(str, get_version, notify=on_get)
     
     def clean_url(self, url):
         # cleans url of unnecessary parameters
