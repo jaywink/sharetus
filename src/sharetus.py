@@ -90,13 +90,14 @@ class Sharer(QtCore.QObject):
 					raise Exception()
                 settings['targets'][service]['url'] = settings['targets'][service]['url'].replace('{{pod}}', pod_url)
             except:
-                settings['targets'][service]['url'] = 'http://sharetodiaspora.github.com/?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'
-        share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
+                settings['targets'][service]['url'] = 'http://sharetodiaspora.github.com/?url={{url}}&title={{title}}&notes={{tags}}{{text}}&shorten=no'        
         if service == 'clipboard':
+            share_url = settings['targets'][service]['url'].replace('{{url}}',self.process_url(service)).replace('{{title}}',self.process_title(service)).replace('{{tags}}',self.process_tags(service)).replace('{{text}}',self.process_notes(service))
             clipboard = QtGui.QClipboard()
             clipboard.setText(share_url)
             return "Copied to clipboard"
         else:
+            share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
             QtGui.QDesktopServices.openUrl(share_url)
             return "Opening window for sharing"
 
