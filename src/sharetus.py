@@ -30,7 +30,6 @@ from PySide import QtCore
 from PySide import QtGui
 from PySide import QtDeclarative
 import QtSparql
-import gconf
 import urllib
 import json
 import re
@@ -39,6 +38,7 @@ import os
 
 class Settings(dict):	
     def __init__(self, file_name, template=None):
+        self.file_name = file_name
         try:
             file_object = open(file_name)
         except IOError, e:
@@ -63,6 +63,11 @@ class Settings(dict):
         file_object.close()
         for i in range(len(data)):
             self[data.keys()[i]] = data[data.keys()[i]]
+            
+    def save(self):
+        file_object = open(self.file_name, 'w')
+        json.dump(self, file_object, indent=5)
+        file_object.close()
 
 class Sharer(QtCore.QObject):
     share_url = ""
@@ -85,7 +90,7 @@ class Sharer(QtCore.QObject):
         #soup = BeautifulSoup(page)
         if service == 'diaspora':
             try:
-                pod_url = gconf.client_get_default().get_string("/apps/ControlPanel/Sharetus/diaspora_pod")
+                pod_url = preferences['targets']['diaspora']['pod']
                 if pod_url == None or len(pod_url) == 0:
 					raise Exception()
                 settings['targets'][service]['url'] = settings['targets'][service]['url'].replace('{{pod}}', pod_url)
@@ -177,7 +182,7 @@ class Sharer(QtCore.QObject):
     @QtCore.Slot(result=str)    
     def get_diaspora_pod(self):
         try:
-            return gconf.client_get_default().get_string("/apps/ControlPanel/Sharetus/diaspora_pod")
+            return preferences['targets']['diaspora']['pod']
         except:
             log.write("Couldn't get pod info\n")
             return ""
@@ -185,9 +190,8 @@ class Sharer(QtCore.QObject):
     @QtCore.Slot(str, result=int)    
     def save_diaspora_pod(self, pod_url):
         try:
-            client = gconf.client_get_default()
-            client.set_string('/apps/ControlPanel/Sharetus/diaspora_pod', pod_url)
-            client.suggest_sync()
+            preferences['targets']['diaspora']['pod'] = pod_url
+            preferences.save()
             return 0
         except:
             log.write("Couldn't set pod url\n")
