@@ -35,6 +35,7 @@ import json
 import re
 import sys
 import os
+import traceback
 
 class Settings(dict):	
     def __init__(self, file_name, template=None):
@@ -102,7 +103,10 @@ class Sharer(QtCore.QObject):
             clipboard.setText(share_url)
             return "Copied to clipboard"
         else:
-            share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
+            try:
+                share_url = settings['targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
+            except:
+                share_url = preferences['custom_targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
             QtGui.QDesktopServices.openUrl(share_url)
             return "Opening window for sharing"
 
@@ -249,11 +253,17 @@ controller = TagController(log, sharer, connection, tag_model)
 # get targets from settings
 target_list = []
 try:
+    # built-in targets
     for i in range(len(settings['targets'])):
         if preferences['targets'][settings['targets'].keys()[i]]['visible'] == 1:
             target_list.append(Target(settings['targets'].keys()[i], settings['targets'][settings['targets'].keys()[i]]['name'], preferences['targets'][settings['targets'].keys()[i]]['order']))
+    # custom targets
+    for i in range(len(preferences['custom_targets'])):
+        if preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['visible'] == 1:
+            target_list.append(Target(preferences['custom_targets'].keys()[i], preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['name'], preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['order']))
 except:
     log.write("Error! Problem getting targets!")
+    log.write(traceback.format_exc())
 target_list.sort(key=lambda x: x.order)
     
 # set target model
