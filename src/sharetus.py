@@ -251,9 +251,10 @@ target_list = []
 try:
     for i in range(len(settings['targets'])):
         if preferences['targets'][settings['targets'].keys()[i]]['visible'] == 1:
-            target_list.append(Target(settings['targets'].keys()[i], settings['targets'][settings['targets'].keys()[i]]['name']))
+            target_list.append(Target(settings['targets'].keys()[i], settings['targets'][settings['targets'].keys()[i]]['name'], preferences['targets'][settings['targets'].keys()[i]]['order']))
 except:
     log.write("Error! Problem getting targets!")
+target_list.sort(key=lambda x: x.order)
     
 # set target model
 targets = [TargetWrapper(target) for target in target_list]

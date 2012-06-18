@@ -99,9 +99,10 @@ class TargetController(QtCore.QObject):
 
 
 class Target(object):
-    def __init__(self, name, desc):
+    def __init__(self, name, desc, order):
         self.name = name
         self.desc = desc
+        self.order = order
  
     def __str__(self):
         return self.name
