@@ -54,7 +54,7 @@ Page {
                     ListItem {
                         id: title
                         text: model.tag.name
-
+                        color: "white"
 
 
                         // thanks to this post for help on toggling items
