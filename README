@@ -1,7 +1,7 @@
 S H A R E T U S
 
-Plugin for Nokia N9 Harmattan Share UI for sharing to various social
-and bookmarking sites, including:
+Plugin for Nokia N9 Harmattan (MeeGo) Share UI for sharing to 
+various social and bookmarking sites, including:
 
   * Diaspora*
   * Facebook
@@ -17,24 +17,34 @@ and bookmarking sites, including:
   * Digg
   * StumbleUpon
 
-See Github for details: https://github.com/jaywink/sharetus
+Any of the basic targets can be disabled by editing configuration
+file /opt/sharetus/sharetus.json
+Look for the "status" value for a target and change it to 0.
+
+Also custom targets can be added, though currently only by editing
+the preferences file by hand. These changes will be kept over upgrades.
+Example of custom target can be found after install from 
+~/.sharetus/preferences.json or on Github preferences_template.json.
 
 TODO:
- - Add settings removal on package remove/purge
  - Add image support for Diaspora*
  - Add post excerpt for supported targets
  - Retrieve tags after app load to decrease startup time
- - Enable on/off setting for all targets
- - Add possibility to add custom targets
- - Fix issue with application image
+ - Add GUI for configuring custom targets
+ - Add GUI for setting basic targets on/off
+ - Add postinst to add icon to theme image list
+ - Add postrm to remove icon from theme image lists
 
 Contributions from elsewhere:
- - Python classes TagWrapper, TagListModel, TagController
-   and Tag, which are based on the example from
+ - Python classes in src/tags.py and src/targets.py, which are 
+   based on the example from
    http://developer.qt.nokia.com/wiki/Selectable_list_of_Python_objects_in_QML
  - C++ classes SharetusPlugin and SharetusMethod, which are based
    on CmdShare by Tuomas Kulve
    http://tuomas.kulve.fi/blog/2012/01/12/command-line-sharing-for-harmattan/
+ - Help on retrieving tags from Tracker by various Maemo.org and
+   developer.nokia.com members
+ - Icon from (TODO: find icon source and add)
 
 Otherwise the following licence is valid:
 
