@@ -20,7 +20,7 @@ OTHER_FILES += \
     src/targets.py \
     sharetus.json \
     preferences_template.json \
-    sharetus.png \
+    icon-m-sharetus.png \
     qml/List.qml \
     qml/URLInfo.qml \
     qml/TagChooser.qml \
@@ -44,8 +44,8 @@ qml.path = /opt/sharetus/qml
 python.files = src/sharetus.py src/tags.py src/targets.py
 python.path = /opt/sharetus/src
 
-img.files = sharetus.png
-img.path = /usr/share/icons/hicolor/64x64/apps
+icon.files = icon-m-sharetus.png
+icon.path = /usr/share/themes/blanco/meegotouch/icons
 
 data.files = sharetus.json
 data.path = /opt/sharetus
@@ -53,5 +53,5 @@ data.path = /opt/sharetus
 template.files = preferences_template.json
 template.path = /opt/sharetus/templates
 
-INSTALLS += target qml python img data template
+INSTALLS += target qml python data template icon
 
