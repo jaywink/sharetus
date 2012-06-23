@@ -32,8 +32,6 @@ TODO:
  - Retrieve tags after app load to decrease startup time
  - Add GUI for configuring custom targets
  - Add GUI for setting basic targets on/off
- - Add postinst to add icon to theme image list
- - Add postrm to remove icon from theme image lists
 
 Contributions from elsewhere:
  - Python classes in src/tags.py and src/targets.py, which are 
