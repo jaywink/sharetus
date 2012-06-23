@@ -1,10 +1,21 @@
+sharetus (0.8.0) unstable; urgency=low
+  * Fixed issue with application icon in Share UI. Still requires a reboot after first install
+  * Custom targets now work from user preferences file. No UI yet to modify them.
+
+ -- Jason Robinson <jaywink@basshero.org>  Sat, 23 Jun 2012 17:58:29 +0300
+
 sharetus (0.7.0) unstable; urgency=low
-  * <Add change description here>
+  * Added "Copy to clipboard" to list of basic targets
+  * Added user preferences JSON file and template
+  * D* pod now saved in preferences file, removed Gconf dependency
+  * All targets are now loaded from preferences file and sorted correctly
 
  -- Jason Robinson <jaywink@basshero.org>  Mon, 18 Jun 2012 23:13:07 +0300
 
 sharetus (0.6.0) unstable; urgency=low
-  * <Add change description here>
+  * Use D*AS as a backup when no D* pod found instead of obsolete DSS
+  * Share target list now moved to JSON config file
+  * Gconf settings are no purged on application removal
 
  -- Jason Robinson <jaywink@basshero.org>  Sun, 17 Jun 2012 12:52:18 +0300
 
