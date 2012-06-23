@@ -3,8 +3,9 @@
 # remove gconf settings as they are not used any more in version 0.6+
 /usr/bin/aegis-exec -s -u user /usr/bin/gconftool --recursive-unset /apps/ControlPanel/Sharetus
 
-#remove home folder settings dir on purge
+#purge
 if [ "purge" = $1 ]; then
+	# remove home folder settings dir
 	rm -rf /home/user/.sharetus/
 fi
 

@@ -45,7 +45,7 @@ python.files = src/sharetus.py src/tags.py src/targets.py
 python.path = /opt/sharetus/src
 
 icon.files = icon-m-sharetus.png
-icon.path = /usr/share/themes/blanco/meegotouch/icons
+icon.path = /usr/share/themes/blanco/meegotouch/images/sharetus/
 
 data.files = sharetus.json
 data.path = /opt/sharetus
