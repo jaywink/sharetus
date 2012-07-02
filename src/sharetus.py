@@ -252,24 +252,31 @@ controller = TagController(log, sharer, connection, tag_model)
 
 # get targets from settings
 target_list = []
+target_all_list = []
 try:
     # built-in targets
     for i in range(len(settings['targets'])):
         if preferences['targets'][settings['targets'].keys()[i]]['visible'] == 1:
             target_list.append(Target(settings['targets'].keys()[i], settings['targets'][settings['targets'].keys()[i]]['name'], preferences['targets'][settings['targets'].keys()[i]]['order']))
+        target_all_list.append(Target(settings['targets'].keys()[i], settings['targets'][settings['targets'].keys()[i]]['name'], preferences['targets'][settings['targets'].keys()[i]]['order']))
     # custom targets
     for i in range(len(preferences['custom_targets'])):
         if preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['visible'] == 1:
             target_list.append(Target(preferences['custom_targets'].keys()[i], preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['name'], preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['order']))
+        target_list.append(Target(preferences['custom_targets'].keys()[i], preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['name'], preferences['custom_targets'][preferences['custom_targets'].keys()[i]]['order']))
 except:
     log.write("Error! Problem getting targets!")
     log.write(traceback.format_exc())
 target_list.sort(key=lambda x: x.order)
+target_all_list.sort(key=lambda x: x.order)
     
 # set target model
 targets = [TargetWrapper(target) for target in target_list]
 target_model = TargetListModel(targets)
 target_controller = TargetController(target_model)
+targets_all = [TargetWrapper(target) for target in target_all_list]
+target_all_model = TargetListModel(targets_all)
+target_all_controller = TargetController(target_all_model)
 
 # set contexts
 context.setContextProperty('sharer', sharer)
@@ -277,6 +284,8 @@ context.setContextProperty('controller', controller)
 context.setContextProperty('tagListModel', tag_model)
 context.setContextProperty('targetListModel', target_model)
 context.setContextProperty('targetController', target_controller)
+context.setContextProperty('targetAllListModel', target_all_model)
+context.setContextProperty('targetAllController', target_all_controller)
 
 # show app
 view.setSource(QtCore.QUrl('/opt/sharetus/qml/main.qml'))

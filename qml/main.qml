@@ -45,6 +45,12 @@ PageStackWindow {
             id: aboutPage
 
         }
+
+        TargetChooser {
+            id: targetChooserPage
+
+        }
+
     }
 
 }

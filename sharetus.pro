@@ -26,7 +26,8 @@ OTHER_FILES += \
     qml/TagChooser.qml \
     qml/ListItem.qml \
     qml/NewTag.qml \
-    qml/About.qml
+    qml/About.qml \
+    qml/TargetChooser.qml
 
 SOURCES += \
     src/sharetusmethod.cpp src/sharetusplugin.cpp
@@ -38,7 +39,7 @@ CONFIG += mdatauri shareui share-ui-plugin share-ui-common qt debug plugin link_
 
 target.path = /usr/lib/share-ui/plugins
 
-qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml qml/About.qml
+qml.files = qml/main.qml qml/MainPage.qml qml/Service.qml qml/List.qml qml/URLInfo.qml qml/TagChooser.qml qml/ListItem.qml qml/NewTag.qml qml/About.qml qml/TargetChooser.qml
 qml.path = /opt/sharetus/qml
 
 python.files = src/sharetus.py src/tags.py src/targets.py
