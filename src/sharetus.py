@@ -69,6 +69,9 @@ class Settings(dict):
         file_object = open(self.file_name, 'w')
         json.dump(self, file_object, indent=5)
         file_object.close()
+        
+    def reload(self):
+        self.__init__(self.file_name)
 
 class Sharer(QtCore.QObject):
     share_url = ""
@@ -92,6 +95,7 @@ class Sharer(QtCore.QObject):
         if service == 'diaspora':
             try:
                 pod_url = preferences['targets']['diaspora']['pod']
+                print pod_url
                 if pod_url == None or len(pod_url) == 0:
 					raise Exception()
                 settings['targets'][service]['url'] = settings['targets'][service]['url'].replace('{{pod}}', pod_url)
@@ -108,6 +112,9 @@ class Sharer(QtCore.QObject):
             except:
                 share_url = preferences['custom_targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
             QtGui.QDesktopServices.openUrl(share_url)
+            if service == 'diaspora':
+                # reload settings
+                settings.reload()
             return "Opening window for sharing"
 
     def process_title(self, service):
@@ -196,6 +203,7 @@ class Sharer(QtCore.QObject):
         try:
             preferences['targets']['diaspora']['pod'] = pod_url
             preferences.save()
+            print preferences['targets']['diaspora']['pod']
             return 0
         except:
             log.write("Couldn't set pod url\n")
