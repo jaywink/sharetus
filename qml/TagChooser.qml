@@ -40,7 +40,6 @@ Page {
         ListView {
             id: tagList
             model: tagListModel
-            anchors.horizontalCenter: parent
             anchors.fill: parent
 
             delegate: Component {
@@ -91,7 +90,11 @@ Page {
                }
            }
 
-       }
+        }
+
+        ScrollDecorator {
+            flickableItem: tagList
+        }
    }
 
 }

@@ -115,7 +115,7 @@ Page {
 
                     Label {
                         id: diasporaPodLabel
-                        text: "Diaspora* pod URL"
+                        text: "Diaspora* pod URL<br><small>Without http(s), just pod domain name, for example: joindiaspora.com</small>"
                         anchors.horizontalCenter: parent.horizontalCenter
                         font {
                             family: "Nokia Pure Text"
@@ -156,7 +156,8 @@ Page {
                             anchors.topMargin: 12
                             anchors.leftMargin: 20
                             focus: true
-                            validator: RegExpValidator{regExp: /[a-zA-Z0-9\-\.\:\/]*/}
+                            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                            validator: RegExpValidator{regExp: /[a-z0-9\-\.\/]*/}
 
                             Keys.onReturnPressed: {
                                 diasporaPodUrlInput.closeSoftwareInputPanel()
@@ -196,8 +197,10 @@ Page {
                             var result = sharer.save_diaspora_pod(diasporaPodUrlInput.text);
                             if (result == 0) {
                                 savedNotifyText.text = "Saved";
-                            } else {
+                            } else if (result == 1) {
                                 savedNotifyText.text = "Failed to save pod url!";
+                            } else if (result == 2) {
+                                savedNotifyText.text = "Pod check failed!";
                             }
                             savedNotify.visible = true;
                             savedNotifyTimer.running = true;
@@ -208,13 +211,15 @@ Page {
                 Rectangle {
                     id: savedNotify
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: settingsTitle.bottom
                     width: parent.width * 0.8;
                     height: 36;
                     color: "white"
                     visible: false
                     border.color: "green"; border.width: 4
                     radius: 3
+                    z: 1
 
                     Text {
                         id: savedNotifyText
