@@ -90,7 +90,11 @@ Page {
                }
            }
 
-       }
+        }
+
+        ScrollDecorator {
+            flickableItem: tagList
+        }
    }
 
 }
