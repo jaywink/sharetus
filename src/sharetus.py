@@ -96,7 +96,6 @@ class Sharer(QtCore.QObject):
         if service == 'diaspora':
             try:
                 pod_url = preferences['targets']['diaspora']['pod']
-                print pod_url
                 if pod_url == None or len(pod_url) == 0:
 					raise Exception()
                 settings['targets'][service]['url'] = settings['targets'][service]['url'].replace('{{pod}}', pod_url)
@@ -211,7 +210,6 @@ class Sharer(QtCore.QObject):
                 return 2
             preferences['targets']['diaspora']['pod'] = pod_url
             preferences.save()
-            print preferences['targets']['diaspora']['pod']
             return 0
         except:
             log.write("Couldn't set pod url "+pod_url+"\n")
