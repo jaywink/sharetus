@@ -115,7 +115,7 @@ Page {
 
                     Label {
                         id: diasporaPodLabel
-                        text: "Diaspora* pod URL"
+                        text: "Diaspora* pod URL<br><small>Without http(s), just pod domain name, for example: joindiaspora.com</small>"
                         anchors.horizontalCenter: parent.horizontalCenter
                         font {
                             family: "Nokia Pure Text"
@@ -156,7 +156,8 @@ Page {
                             anchors.topMargin: 12
                             anchors.leftMargin: 20
                             focus: true
-                            validator: RegExpValidator{regExp: /[a-zA-Z0-9\-\.\:\/]*/}
+                            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
+                            validator: RegExpValidator{regExp: /[a-z0-9\-\.\/]*/}
 
                             Keys.onReturnPressed: {
                                 diasporaPodUrlInput.closeSoftwareInputPanel()
