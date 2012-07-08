@@ -32,7 +32,6 @@ import QtMobility.feedback 1.1
         ListView {
              id: listModel
              model: targetListModel
-             anchors.horizontalCenter: parent
              anchors.fill: parent
 
              delegate: Component {
@@ -106,7 +105,7 @@ import QtMobility.feedback 1.1
          }
 
          ScrollDecorator {
-             flickableItem: listView
+             flickableItem: listModel
          }
     }
 
