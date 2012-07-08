@@ -194,7 +194,7 @@ class Sharer(QtCore.QObject):
     @QtCore.Slot(result=str)    
     def get_diaspora_pod(self):
         try:
-            return preferences['targets']['diaspora']['pod']
+            return preferences['targets']['diaspora']['pod'].replace('https://','')
         except:
             log.write("Couldn't get pod info\n")
             return ""

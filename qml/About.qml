@@ -211,13 +211,15 @@ Page {
                 Rectangle {
                     id: savedNotify
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: settingsTitle.bottom
                     width: parent.width * 0.8;
                     height: 36;
                     color: "white"
                     visible: false
                     border.color: "green"; border.width: 4
                     radius: 3
+                    z: 1
 
                     Text {
                         id: savedNotifyText
