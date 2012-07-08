@@ -36,6 +36,7 @@ import re
 import sys
 import os
 import traceback
+import urllib2
 
 class Settings(dict):	
     def __init__(self, file_name, template=None):
@@ -201,12 +202,19 @@ class Sharer(QtCore.QObject):
     @QtCore.Slot(str, result=int)    
     def save_diaspora_pod(self, pod_url):
         try:
+            pod_url = 'https://'+pod_url.lstrip('/')
+            try:
+                pod_conn = urllib2.urlopen(pod_url+'/bookmarklet')
+                pod_conn.close()
+            except:
+                log.write("Couldn't set pod url, url "+pod_url+" returned bad http code\n")
+                return 2
             preferences['targets']['diaspora']['pod'] = pod_url
             preferences.save()
             print preferences['targets']['diaspora']['pod']
             return 0
         except:
-            log.write("Couldn't set pod url\n")
+            log.write("Couldn't set pod url "+pod_url+"\n")
             return 1
             
 # INIT APP

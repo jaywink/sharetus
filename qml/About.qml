@@ -197,8 +197,10 @@ Page {
                             var result = sharer.save_diaspora_pod(diasporaPodUrlInput.text);
                             if (result == 0) {
                                 savedNotifyText.text = "Saved";
-                            } else {
+                            } else if (result == 1) {
                                 savedNotifyText.text = "Failed to save pod url!";
+                            } else if (result == 2) {
+                                savedNotifyText.text = "Pod check failed!";
                             }
                             savedNotify.visible = true;
                             savedNotifyTimer.running = true;
