@@ -36,6 +36,7 @@ import re
 import sys
 import os
 import traceback
+import urllib2
 
 class Settings(dict):	
     def __init__(self, file_name, template=None):
@@ -69,6 +70,9 @@ class Settings(dict):
         file_object = open(self.file_name, 'w')
         json.dump(self, file_object, indent=5)
         file_object.close()
+        
+    def reload(self):
+        self.__init__(self.file_name)
 
 class Sharer(QtCore.QObject):
     share_url = ""
@@ -108,6 +112,9 @@ class Sharer(QtCore.QObject):
             except:
                 share_url = preferences['custom_targets'][service]['url'].replace('{{url}}',urllib.quote(self.process_url(service))).replace('{{title}}',urllib.quote(self.process_title(service))).replace('{{tags}}',urllib.quote(self.process_tags(service))).replace('{{text}}',urllib.quote(self.process_notes(service)))
             QtGui.QDesktopServices.openUrl(share_url)
+            if service == 'diaspora':
+                # reload settings
+                settings.reload()
             return "Opening window for sharing"
 
     def process_title(self, service):
@@ -186,7 +193,7 @@ class Sharer(QtCore.QObject):
     @QtCore.Slot(result=str)    
     def get_diaspora_pod(self):
         try:
-            return preferences['targets']['diaspora']['pod']
+            return preferences['targets']['diaspora']['pod'].replace('https://','')
         except:
             log.write("Couldn't get pod info\n")
             return ""
@@ -194,11 +201,18 @@ class Sharer(QtCore.QObject):
     @QtCore.Slot(str, result=int)    
     def save_diaspora_pod(self, pod_url):
         try:
+            pod_url = 'https://'+pod_url.lstrip('/')
+            try:
+                pod_conn = urllib2.urlopen(pod_url+'/bookmarklet')
+                pod_conn.close()
+            except:
+                log.write("Couldn't set pod url, url "+pod_url+" returned bad http code\n")
+                return 2
             preferences['targets']['diaspora']['pod'] = pod_url
             preferences.save()
             return 0
         except:
-            log.write("Couldn't set pod url\n")
+            log.write("Couldn't set pod url "+pod_url+"\n")
             return 1
             
 # INIT APP

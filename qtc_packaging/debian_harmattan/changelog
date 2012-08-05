@@ -1,3 +1,9 @@
+sharetus (0.8.1) unstable; urgency=low
+  * Fixed problems with Diaspora* pod saving
+  * Other small tweaks
+
+ -- Jason Robinson <jaywink@basshero.org>  Sun, 08 Jul 2012 17:08:50 +0300
+
 sharetus (0.8.0) unstable; urgency=low
   * Fixed issue with application icon in Share UI. Still requires a reboot after first install
   * Custom targets now work from user preferences file. No UI yet to modify them.
