@@ -68,6 +68,11 @@ import QtMobility.feedback 1.1
                              notify.visible = true;
                              notifyTimer.running = true;
                          }
+                         onPressAndHold: {
+                             rumbleEffect.start();
+                             pageStack.push(targetConfPage);
+
+                         }
                      }
                  }
              }

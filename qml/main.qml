@@ -51,6 +51,11 @@ PageStackWindow {
 
         }
 
+        TargetConf {
+            id: targetConfPage
+
+        }
+
     }
 
 }
