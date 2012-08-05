@@ -46,11 +46,6 @@ PageStackWindow {
 
         }
 
-        TargetChooser {
-            id: targetChooserPage
-
-        }
-
         TargetConf {
             id: targetConfPage
 

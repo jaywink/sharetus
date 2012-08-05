@@ -30,7 +30,6 @@ Page {
         ToolItem { iconId: "icon-m-toolbar-back"; onClicked: pageStack.pop(); }
         ToolButton { text: "Contact"; onClicked: sharer.contact();  }
         ToolButton { text: "Homepage"; onClicked: sharer.homepage();  }
-        ToolButton { text: "Targets"; onClicked: pageStack.push(targetChooserPage)  }
     }
 
     property variant version: sharer.version_str

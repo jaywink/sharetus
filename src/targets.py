@@ -66,8 +66,6 @@ class TargetListModel(QtCore.QAbstractListModel):
 
 class TargetController(QtCore.QObject):
     
-    targets = []
-    
     def __init__(self, target_model):
         QtCore.QObject.__init__(self)
         #self.log = log
@@ -75,22 +73,29 @@ class TargetController(QtCore.QObject):
         #self.connection = connection
         self.target_model = target_model
     
-    @QtCore.Slot(QtCore.QObject)
-    def targetSelected(self, wrapper):
-        self.toggle_target(wrapper._target.name)
+    #@QtCore.Slot(QtCore.QObject)
+    #def targetSelected(self, wrapper):
+        #log.write('User clicked on:'+ wrapper._tag.name)
+        #self.sharer.toggle_tag(wrapper._tag.name)
         
-    def toggle_target(self, target):
-        if target in self.targets:
-            self.targets.remove(target)
-        else:
-            self.targets.append(target)
+    #@QtCore.Slot(str, str)
+    #def save_tags(self, tags, to_database):
+        #for tag in tags.split(','):
+            #log.write('Adding tag: '+tag)
+            #self.sharer.toggle_tag(tag)
+            #self.tag_model.addItem(tag)
+            #if to_database == 'true':
+                #query = QtSparql.QSparqlQuery("insert { _:a a nao:Tag ; nao:prefLabel '"+tag+"' . }", QtSparql.QSparqlQuery.InsertStatement)
+                #result = connection.exec_(query)
+                #result.waitForFinished()
+                #log.write('Tag '+tag+' added to database')
                 
-    @QtCore.Slot(str, result=str)
-    def targetStatus(self, target):
-        if target in self.targets:
-            return "on"
-        else:
-            return "off"
+    #@QtCore.Slot(str, result=str)
+    #def tagStatus(self, target):
+        #if target in sharer.targets:
+            #return "on"
+        #else:
+            #return "off"
 
 
 class Target(object):
