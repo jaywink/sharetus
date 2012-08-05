@@ -30,6 +30,10 @@ Page {
         ToolItem { iconId: "icon-m-toolbar-back"; onClicked: pageStack.pop(); }
     }
 
+    property variant target
+
+    onTargetChanged: confTitle.text = target.desc
+
     Rectangle {
         height: targetConfPage.height
         width: targetConfPage.width
@@ -46,12 +50,15 @@ Page {
                 Label {
                     id: confTitle
                     width: parent.width
-                    text: 'Configure Target'
-                    color: "green"
+                    text: "placeholder"
+                    color: "white"
                     font {
                         family: "Nokia Pure Text"
-                        pixelSize: 36
+                        pixelSize: 50
+                        bold: true
                     }
+                    elide: Text.ElideRight
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 // This is just a dummy invisible item that takes the focus when virtual keyboard is closed

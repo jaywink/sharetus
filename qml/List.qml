@@ -70,7 +70,7 @@ import QtMobility.feedback 1.1
                          }
                          onPressAndHold: {
                              rumbleEffect.start();
-                             pageStack.push(targetConfPage);
+                             pageStack.push(targetConfPage, {target: model.target});
 
                          }
                      }

@@ -4,7 +4,10 @@
 	"targets" 	: {
 		"diaspora"	: {
             "name"      : "Diaspora*",
-			"url"		: "{{pod}}/bookmarklet?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose"
+			"url"		: "{{pod}}/bookmarklet?url={{url}}&title={{title}}&notes={{tags}}{{text}}&v=1&noui=1&jump=doclose",
+            "settings"  : {
+                "pod"   : "url"
+            }
 		},
 		"facebook"	: {
             "name"      : "Facebook",
